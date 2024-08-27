@@ -67,7 +67,7 @@ const ViewAdministrators = () => {
 
     async function getAdministratorAddress() {
         let result = await axios.get("http://localhost:4000/api/getAllEmployeesAdddress")
-        setEmployeeAddress(result.data)
+        setadministratorAddress(result.data)
         console.log(result.data)
     }
 

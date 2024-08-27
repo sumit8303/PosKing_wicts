@@ -71,21 +71,36 @@ exports.deleteAdministrator=async(req,res)=>{
 
 // ------------------Update-Administrator--------------------------
 
+// exports.updateAdministrator=async(req,res)=>{
+//     let id=req.params.id;
+//     let {name,email,password,confirmPassword,phoneNumber,status}=req.body;
+//     try {
+//         let findCustomer=await administratorModel.findByIdAndUpdate({_id:id})
+//         if(findCustomer){
+//     let updateCustomer= await administratorModel.updateOne({_id:id}, { $set:{email: email,password:password,confirmPassword:confirmPassword,phoneNumber:phoneNumber,name:name,status:status}})
+
+//             return res.status(400).json({success:true,message:"Employees updated successfully",updateCustomer})
+//         }
+//     } catch (error) {
+//         return res.status(400).json({success:"false",error:error.message})
+//     }
+// }
+
+
 exports.updateAdministrator=async(req,res)=>{
     let _id=req.params._id;
-    let {name,email,password,confirmPassword,phoneNumber,status}=req.body;
+    let {name,email,password,confirmPassword,phoneNumber,address,status}=req.body;
     try {
-        let findCustomer=await administratorModel.findByIdAndUpdate({_id:_id})
-        if(findCustomer){
-    let updateCustomer= await administratorModel.updateOne({_id:_id}, { $set:{email: email,password:password,confirmPassword:confirmPassword,phoneNumber:phoneNumber,name:name,status:status}})
+        let findAdministrator=await administratorModel.findByIdAndUpdate({_id:_id})
+        if(findAdministrator){
+    let findAdministrator = await administratorModel.updateOne({_id:_id}, { $set:{email: email,password:password,confirmPassword:confirmPassword,address:address,phoneNumber:phoneNumber,name:name,status:status } })
 
-            return res.send.json({success:true,message:"Employees updated successfully",updateCustomer})
+            return res.status(200).json({success:true,message:"Employees updated successfully",findAdministrator})
         }
     } catch (error) {
         return res.status(400).json({success:"false",error:error.message})
     }
 }
-
 
 
 // ------------------------------------------------Administrators-View-------------------------------

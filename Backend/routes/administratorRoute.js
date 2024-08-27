@@ -8,7 +8,10 @@ const administratorRouter = require('../controller/administratorController.js');
 router.post('/addAdministrator',  administratorRouter.newadministrator)
 router.get('/getAllAdministrator', administratorRouter.getAllAdministrator)
 router.delete('/deleteAdministrator/:_id', administratorRouter.deleteAdministrator)
-router.put('/updateAdministrator/:_id',administratorRouter.updateAdministrator)
+router.put('/updateAdministrator/:_id', administratorRouter.updateAdministrator)
+
+
+
 router.get('/viewAdministrator/:id', administratorRouter.viewAdministrator)
 
 

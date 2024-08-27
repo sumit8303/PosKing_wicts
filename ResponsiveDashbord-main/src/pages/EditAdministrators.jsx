@@ -9,6 +9,37 @@ import axios from 'axios';
 
 
 const EditAdministrators = () => {
+    // const navigation = useNavigate()
+    // const [administrator, SetAdministrator] = useState({
+    //     name :"",
+    //     email :"",
+    //     phoneNumber :"",
+    //     status :"",
+    //     password :"",
+    //     confirmPassword :"",
+      
+    // })
+
+    // const {name, email, phoneNumber, status, password, confirmPassword} = administrator
+
+    // function handleChange(e){
+    //     SetAdministrator({...administrator, [e.target.name]: e.target.value})
+    // }
+    // let {id} = useParams()
+    // useEffect(()=>{
+    //     viewAdministrator()
+    // },[])
+    // async function viewAdministrator() {
+    //     let result = await axios.get(`http://localhost:4000/api/viewAdministrator/${id}`)
+    //     SetAdministrator(result.data[0]) 
+    // }
+
+    // async function handleSubmit(e){
+    //     e.preventDefault()
+    //     await axios.put(`http://localhost:4000/api/updateAdministrator/${id}`, administrator) 
+    //     navigation('/admin/administrators')
+    //    }
+
     const navigation = useNavigate()
     const [administrator, SetAdministrator] = useState({
         name :"",
@@ -17,10 +48,10 @@ const EditAdministrators = () => {
         status :"",
         password :"",
         confirmPassword :"",
-      
+        role :"",
     })
 
-    const {name, email, phoneNumber, status, password, confirmPassword} = administrator
+    const {name, email, phoneNumber, status, password, confirmPassword, role} = administrator
 
     function handleChange(e){
         SetAdministrator({...administrator, [e.target.name]: e.target.value})
@@ -182,7 +213,7 @@ const EditAdministrators = () => {
                                                             <label for="Active" class="ms-2 text-base font-medium text-gray">Active</label>
                                                         </div>
                                                         <div class="flex w-full items-center mb-4 ">
-                                                            <input id="Inactive" type="radio" value="Inactive" name="status" onChange={handleChange} checked = {status ==="Inactive"} valclassName='accent-success h-4 w-4 ' />
+                                                            <input id="Inactive" type="radio" value="Inactive" name="status" onChange={handleChange} checked = {status==="Inactive"} valclassName='accent-success h-4 w-4 ' />
                                                             <label for="Inactive" class="ms-2 text-base font-medium text-gray">Inactive</label>
                                                         </div>
                                                     </div>
