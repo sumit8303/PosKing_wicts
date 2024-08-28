@@ -494,4 +494,3 @@ async function getCategory(){
 }
 
 export default EditProducts
-

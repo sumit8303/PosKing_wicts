@@ -21,7 +21,7 @@
     "@tiptap/pm": "^2.5.9",
     "@tiptap/react": "^2.5.9",
     "@tiptap/starter-kit": "^2.5.9",
-    "axios": "^1.7.4",
+    "axios": "^1.7.3",
     "echarts-for-react": "^3.0.2",
     "flowbite": "^2.5.1",
     "flowbite-react": "^0.10.1",

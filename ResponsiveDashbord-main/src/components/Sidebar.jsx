@@ -16,7 +16,7 @@ import { FaSellsy } from "react-icons/fa6";
 import { TbReportAnalytics } from "react-icons/tb";
 import { IoSettings } from "react-icons/io5";
 import { IoMenuOutline } from "react-icons/io5";
-
+import { FaUser } from "react-icons/fa";
 
 
 const Sidebar = () => {
@@ -76,7 +76,7 @@ const Sidebar = () => {
             id: 8,
             path: "/admin/administrators",
             name: "Administrators",
-            icon: CiUser
+            icon: FaUser
         },
         {
             id: 9,
@@ -113,7 +113,7 @@ const Sidebar = () => {
 
     return (
         <>
-            <div className="w-16 md:w-56 fixed left-0 top-0 z-10 h-screen overflow-y-scroll   pt-8 px-4 bg-white">
+            <div className="w-16 md:w-56 fixed left-0 top-0 z-10 h-screen overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-slate-50  pt-8 px-4 bg-white">
                 {/* logo */}
                 <div className='mb-8'>
                     <img src={Logo} alt="logo" className='w-28 hidden md:flex' srcset="" />
@@ -128,8 +128,8 @@ const Sidebar = () => {
                 <ul className='mt-6 space-y-4 '>
                     {
                         SIDEBAR_LINKS.map((link, index) => (
-                            <li key={index} className={`font-medium text-black rounded-md py-2 px-5 hover:bg-gray-100 
-                            hover:text-[#f23e14] ${activeLink === index ? 'bg-[#ff9248] text-white' : ''}`}>
+                            <li key={index} className={`font-medium text-black rounded-md py-2 px-5 hover:bg-lightsuccess 
+                            hover:text-white ${activeLink === index ? 'bg-success text-white' : ''}`}>
                                 <Link to={link.path}
                                     onClick={() => handleLinkClick(index)}
                                     className='flex justify-center md:justify-start items-center md:space-x-5 '>
@@ -140,9 +140,6 @@ const Sidebar = () => {
                         ))
                     }
                 </ul>
-
-                {/* bg-gradient-to-r from-[#f23e14] */}
-
 
             </div>
 

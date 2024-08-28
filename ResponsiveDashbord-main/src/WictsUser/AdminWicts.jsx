@@ -2,7 +2,7 @@ import React from 'react'
 
 import {Outlet} from 'react-router-dom'
 
-const App = () => {
+const AdminWicts = () => {
 
   return (
     <>
@@ -14,4 +14,4 @@ const App = () => {
   )
 }
 
-export default App
+export default AdminWicts

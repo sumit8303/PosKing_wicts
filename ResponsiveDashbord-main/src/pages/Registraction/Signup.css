@@ -1,0 +1,7 @@
+.bg-texture{
+    background: url('https://images.pexels.com/photos/845451/pexels-photo-845451.jpeg');
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+backdrop-filter: blur(10px); 
+} 

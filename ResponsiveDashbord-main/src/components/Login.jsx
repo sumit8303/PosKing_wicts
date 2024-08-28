@@ -9,28 +9,41 @@ const Login = () => {
   return (
     <>
       <section>
-        <div className="container m-auto my-3">
-          <div className="grid grid-cols-1  rounded-md  lg:grid-cols-2 w-[50rem]  m-auto shadow-[rgba(0, 0, 0, 0.16) 0px 1px 4px] ">
+        <div className="container m-auto  my-3">
+          <div className="grid grid-col-1  md:grid-cols-2 w-max  m-auto  ">
             <div className="">
               <img
-                className="mx-auto lg:h-full lg:w-full sm:h-40 sm:w-20 rounded-md object-cover"
+                className="mx-auto hidden md:block md:h-full md:w-full rounded-l-3xl bg-cover"
                 src={loginImage}
                 alt=""
               />
             </div>
 
-            <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
+
+            <div className="flex items-center justify-center  py-4  w-full shadow-xl md:rounded-r-3xl  bg-white">
               <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">
-                <h2 className="text-title-lg font-bold leading-tight text-success text-center sm:title-sm">Sign in</h2>
+                <h2 className="text-title-lg font-bold leading-tight text-success uppercase text-center sm:title-sm">Sign in</h2>
                 <p className="mt-2 text-title-sm text-gray-600 text-center">
                   Sign in to continue shopping     </p>
-                <form action="#" method="POST" className="mt-8">
+
+                <Link to="/signup"
+                  className="text-sm  w-full flex justify-center mt-2 font-semibold items-center text-md  hover:underline"
+                >
+                  {' '}
+                  New User <span className='mx-1 uppercase text-success text-lg'>Sign up</span>{' '}
+                </Link>
+                <div className="flex items-center my-6">
+                  <hr className="flex-1" />
+                  <span className="px-4 text-sm text-gray-400">Or countinue with</span>
+                  <hr className="flex-1" />
+                </div>
+                <form action="#" method="POST" className="mt-5">
                   <div className="space-y-5">
                     <div>
                       <div className="flex items-center justify-between">
                         <label htmlFor="" className="text-base font-medium text-gray-900">
                           {' '}
-                          Email<span className='text-success px-1'>*</span>
+                          User Id<span className='text-success px-1'>*</span>
                         </label>
                         <a
                           href="#"
@@ -45,11 +58,12 @@ const Login = () => {
                       <div className="mt-2">
                         <input
                           className="flex h-10 w-full rounded-md border border-red-300 bg-transparent px-3 py-2 text-sm  focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                          type="email"
-                          placeholder="Email"
+                          type="text"
+                          placeholder="user id"
                         ></input>
                       </div>
                     </div>
+
                     <div>
                       <div className="">
                         <label htmlFor="" className="text-base font-medium text-gray-900">
@@ -62,6 +76,22 @@ const Login = () => {
                           className="flex h-10 w-full rounded-md border border-red-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                           type="password"
                           placeholder="Password"
+                        ></input>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="">
+                        <label htmlFor="" className="text-base font-medium text-gray-900">
+                          {' '}
+                          Key License<span className='text-success px-1'>*</span>
+                        </label>
+                      </div>
+                      <div className="mt-2">
+                        <input
+                          className="flex h-10 w-full rounded-md border border-red-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                          type="password"
+                          placeholder="Enter your key license"
                         ></input>
                       </div>
                     </div>
@@ -98,23 +128,23 @@ const Login = () => {
                       <Link
                         type="button"
                         to="/"
-                        className="inline-flex w-full items-center justify-center rounded-full bg-success px-3.5 py-2.5 font-semibold leading-7 text-white "
+                        className="inline-flex w-full uppercase items-center justify-center rounded-3xl bg-success px-3.5 py-2.5 font-semibold leading-7 text-white "
                       >
                         Sign In
                       </Link>
                     </div>
 
 
-                    <p className="mt-2 text-title-sm text-gray-600 text-center">
+                    <p className="mt-2 text-sm text-gray-600 text-center">
                       For quick demo login click below     </p>
 
 
-                    <div className="grid grid-cols-2 ">
+                    <div className="grid md:grid-cols-2 gap-2 grid-cols-1">
 
                       <div>
                         <Link to="/admin"
                           type="button"
-                          className="inline-flex w-[10rem] mb-2 items-center justify-center rounded-[.5rem] bg-loginAdmin px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
+                          className="inline-flex md:w-[10rem] w-full mb-2 items-center justify-center rounded-[.5rem] bg-loginAdmin px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
                         >
                           Admin
                         </Link>
@@ -122,20 +152,30 @@ const Login = () => {
                       <div>
                         <button
                           type="button"
-                          className="inline-flex w-[10rem] mb-2 items-center justify-center rounded-[.5rem] bg-loginManager px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
+                          className="inline-flex md:w-[10rem] w-full mb-2 items-center justify-center rounded-[.5rem] bg-loginManager px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
                         >
                           Manager
                         </button>
                       </div>
-                      
+
                       <div>
                         <button
                           type="button"
-                          className="inline-flex w-[10rem] mb-2 items-center justify-center rounded-[.5rem] bg-loginPos px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
+                          className="inline-flex md:w-[10rem] w-full mb-2 items-center justify-center rounded-[.5rem] bg-loginPos px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
                         >
                           POS Operator
                         </button>
                       </div>
+
+                      <Link to="/adminWicts">
+                        <button
+                          type="button"
+                          className="inline-flex md:w-[10rem] w-full mb-2 items-center justify-center rounded-[.5rem] bg-lightsuccess px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
+                        >
+Wicts User
+                        </button>
+                      </Link>
+
 
 
                     </div>

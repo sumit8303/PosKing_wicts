@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { FaRegEdit } from "react-icons/fa";
 import { GrFormView } from "react-icons/gr";
 import { MdOutlineDeleteOutline } from "react-icons/md";
+import { MdOutlinePayment } from "react-icons/md";
+import { FaBars } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 
 
@@ -64,6 +66,8 @@ const PurchasesTable = () => {
               <td className='inline-flex px-6 gap-2 py-4'><Link to="/admin/purchases/viewpurchases" className='text-lightsuccess pointer'><GrFormView size={20}/></Link>
                <Link to="/admin/purchases/editpurchases"><FaRegEdit className='text-green-400 pointer' size={20}/></Link> 
                <span><MdOutlineDeleteOutline className='text-red-400 pointer' size={20}/></span> 
+               <Link to="/admin/purchases/addPayment"><MdOutlinePayment className='text-blue-400 pointer' size={20}/></Link> 
+               <Link to="/admin/purchases/viewPayment"><FaBars className='text-green-300 pointer' size={20}/></Link> 
                </td>
             </tr>
           ))}

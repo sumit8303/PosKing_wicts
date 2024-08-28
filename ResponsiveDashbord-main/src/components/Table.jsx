@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { FaRegEdit } from "react-icons/fa";
@@ -122,4 +123,3 @@ const Table = () => {
 };
 
 export default Table;
-

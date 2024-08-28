@@ -5,7 +5,7 @@ import { GrFormView } from "react-icons/gr";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { FaCircleCheck } from "react-icons/fa6";
 import { IoMdPrint } from "react-icons/io";
-import pro from '../../../images/Navbar/profile.webp'
+import pro from '../../../images/Navbar/Logo.png'
 import { IoIosPerson } from "react-icons/io";
 import { GrSecure } from "react-icons/gr";
 import { IoLocationSharp } from "react-icons/io5";
@@ -17,7 +17,10 @@ import { GrPowerReset } from "react-icons/gr";
 
 
 
+
 const ViewSuppliers = () => {
+
+
 
     const [selectImage, setSelectImage] = useState()
 

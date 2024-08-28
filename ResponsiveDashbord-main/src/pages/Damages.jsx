@@ -19,17 +19,17 @@ const Damages = () => {
   const MytoggleMenu = () => {
     Setcalender(!calender)
   }
-  
-    const [open, Setopen] = useState(false)
 
-    const toggleFilter = () => {
-      Setopen(!open)
-    }
-  
-    return (
+  const [open, Setopen] = useState(false)
+
+  const toggleFilter = () => {
+    Setopen(!open)
+  }
+
+  return (
     <>
 
-<section>
+      <section>
         <div className="  text-neutral-600 mx-auto text-md antialiased font-normal  p-5   ">
 
           <div className=" p-2 relative top-5 my-5 mt-5 antialiased">
@@ -101,106 +101,106 @@ const Damages = () => {
 
               {/* -----------From-------------------- */}
 
-{ open &&
-              <div className="flex  justify-between  my-1 p-1  ">
+              {open &&
+                <div className="flex  justify-between  my-1 p-1  ">
 
-                <div className="w-full">
+                  <div className="w-full">
 
-                  <div className="">
+                    <div className="">
 
-{/* ---------------Start---------------------- */}
-
-
-<div className=" p-3 grid md:grid-cols-2 md:gap-5 xl:grid-cols-4  mx-auto ">
-
-<div>
-  <label htmlFor="" className="text-base font-medium text-gray">
-    {' '}
-    Date<span className='text-success px-1'>*</span>
-  </label>
-  <div className="mt-2">
-    <input
-      className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-      type="datetime-local"
-    ></input>
-  </div>
-</div>
-
-<div>
-  <label htmlFor="" className="text-base font-medium text-gray">
-    {' '}
-    Reference No<span className='text-success px-1'>*</span>
-  </label>
-  <div className="mt-2">
-    <input
-      className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-      type="text"
-    ></input>
-  </div>
-</div>
+                      {/* ---------------Start---------------------- */}
 
 
-<div>
-  <label htmlFor="" className="text-base font-medium text-gray">
-    {' '}
-    Total<span className='text-success px-1'>*</span>
-  </label>
-  <div className="mt-2">
-    <input
-      className="flex h-10 rounded-md w-full border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-      type="text"
-    ></input>
-  </div>
-</div>
+                      <div className=" p-3 grid md:grid-cols-2 md:gap-5 xl:grid-cols-4  mx-auto ">
+
+                        <div>
+                          <label htmlFor="" className="text-base font-medium text-gray">
+                            {' '}
+                            Date<span className='text-success px-1'>*</span>
+                          </label>
+                          <div className="mt-2">
+                            <input
+                              className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                              type="datetime-local"
+                            ></input>
+                          </div>
+                        </div>
+
+                        <div>
+                          <label htmlFor="" className="text-base font-medium text-gray">
+                            {' '}
+                            Reference No<span className='text-success px-1'>*</span>
+                          </label>
+                          <div className="mt-2">
+                            <input
+                              className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                              type="text"
+                            ></input>
+                          </div>
+                        </div>
 
 
-<div>
-  <label htmlFor="" className="text-base font-medium text-gray">
-    {' '}
-    Note<span className='text-success px-1'>*</span>
-  </label>
-  <div className="mt-2">
-    <input
-      className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-      type="text"
-    ></input>
-  </div>
-</div>
+                        <div>
+                          <label htmlFor="" className="text-base font-medium text-gray">
+                            {' '}
+                            Total<span className='text-success px-1'>*</span>
+                          </label>
+                          <div className="mt-2">
+                            <input
+                              className="flex h-10 rounded-md w-full border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                              type="text"
+                            ></input>
+                          </div>
+                        </div>
 
 
-</div>
+                        <div>
+                          <label htmlFor="" className="text-base font-medium text-gray">
+                            {' '}
+                            Note<span className='text-success px-1'>*</span>
+                          </label>
+                          <div className="mt-2">
+                            <input
+                              className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                              type="text"
+                            ></input>
+                          </div>
+                        </div>
 
 
-{/* ------------------------End--------------------------------- */}
-
-                 
-                 
-{/* ------------Button----------- */}
-<div className="p-3 grid md:grid-cols-2 md:gap-5 xl:grid-cols-4 md:w-fit w-full space-y-3 md:space-y-0  me-auto">
-
-<div className="px-3 flex justify-around  gap-2 items-center py-1.5  font-larze text-white bg-success  focus:ring-4 focus:outline-none  rounded-md ">
-  <FaCircleCheck className=' ' />
-  <button type="button" >
-    Save
-  </button>
-</div>
-
-<div className="px-3 flex justify-around  gap-2 items-center py-1.5  font-larze text-white bg-gray  focus:ring-4 focus:outline-none  rounded-md ">
-x
-  <button type="button" >
-    Clear
-  </button>
-</div>
+                      </div>
 
 
-</div>
-{/* -----------Button End--------------- */}
+                      {/* ------------------------End--------------------------------- */}
+
+
+
+                      {/* ------------Button----------- */}
+                      <div className="p-3 grid md:grid-cols-2 md:gap-5 xl:grid-cols-4 md:w-fit w-full space-y-3 md:space-y-0  me-auto">
+
+                        <div className="px-3 flex justify-around  gap-2 items-center py-1.5  font-larze text-white bg-success  focus:ring-4 focus:outline-none  rounded-md ">
+                          <FaCircleCheck className=' ' />
+                          <button type="button" >
+                            Save
+                          </button>
+                        </div>
+
+                        <div className="px-3 flex justify-around  gap-2 items-center py-1.5  font-larze text-white bg-gray  focus:ring-4 focus:outline-none  rounded-md ">
+                          x
+                          <button type="button" >
+                            Clear
+                          </button>
+                        </div>
+
+
+                      </div>
+                      {/* -----------Button End--------------- */}
+                    </div>
+
+
                   </div>
-
-
                 </div>
-              </div>
-}
+              }
 
               {/* -----------From End-------------------- */}
 
@@ -209,7 +209,7 @@ x
 
                 <div className="w-full">
 
-<DamagesTable/>
+                  <DamagesTable />
 
                 </div>
               </div>

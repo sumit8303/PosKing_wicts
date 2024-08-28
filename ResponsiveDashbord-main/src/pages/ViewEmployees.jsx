@@ -20,9 +20,9 @@ import axios from 'axios';
 
 const ViewEmployees = () => {
 
+
     const { id } = useParams()
     const [data, setData] = useState([])
-    const [employeeAddress, setEmployeeAddress] = useState([])
 
     let navigation = useNavigate()
 
@@ -55,18 +55,8 @@ const ViewEmployees = () => {
         navigation('/admin/employees')
     }
 
-    const [selectImage, setSelectImage] = useState()
 
-
-    const [activeTab, setActiveTab] = useState('tab1');
-
-    const handleTabChange = (tab) => {
-        setActiveTab(tab);
-    };
-
-
-
-
+    const [employeeAddress, setEmployeeAddress] = useState([])
 
     useEffect(() => {
         getEmployeeAddress()
@@ -77,6 +67,23 @@ const ViewEmployees = () => {
         setEmployeeAddress(result.data)
         console.log(result.data)
     }
+    async function deleteAdministratorAddress(_id) {
+        const result = confirm("Are you sure to delete")
+        if(result === true){
+            await axios.delete(`http://localhost:4000/api/deleteAddAddress/${_id}`)
+            getEmployeeAddress()
+        }
+    }
+    
+
+    const [selectImage, setSelectImage] = useState()
+
+
+    const [activeTab, setActiveTab] = useState('tab1');
+
+    const handleTabChange = (tab) => {
+        setActiveTab(tab);
+    };
 
 
     return (
@@ -212,7 +219,6 @@ const ViewEmployees = () => {
                                 <div>
                                     {data.map((data) => (
 
-
                                         <div className="  ">
                                             <div className=" text-xl font-semibold px-5 py-3 w-full">Basic Information</div><hr />
 
@@ -232,13 +238,14 @@ const ViewEmployees = () => {
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </div>
                                     ))}
+
                                 </div>
                             )}
                             {activeTab === 'tab2' && (
                                 <div>
-
                                     <div className="  ">
                                         <div className=" text-xl font-semibold px-5 py-3 w-full">Change Password
                                         </div><hr />
@@ -295,7 +302,6 @@ const ViewEmployees = () => {
                             )}
                             {activeTab === 'tab3' && (
                                 <div>
-
                                     <div>
                                         <div className="  ">
 
@@ -371,31 +377,32 @@ const ViewEmployees = () => {
                                                                         {employeeAddress.name}
                                                                     </td>
                                                                     <td class="px-4 py-4">
-                                                                        {employeeAddress.email}                                                                    </td>
-                                                                    <td class="px-4 py-4">
-                                                                        {employeeAddress.phoneNumber}
+                                                                        {employeeAddress.email}
                                                                     </td>
                                                                     <td class="px-4 py-4">
-                                                                        {employeeAddress.streetAddress}
+                                                                        {employeeAddress.phoneNumber}                </td>
+                                                                    <td class="px-4 py-4">
+                                                                    {employeeAddress.streetAddress}
                                                                     </td>
                                                                     <td class="px-4 py-4">
-                                                                        {employeeAddress.country}
+                                                                    {employeeAddress.country}
                                                                     </td>
                                                                     <td class="px-4 py-4">
-                                                                        {employeeAddress.state}
+                                                                    {employeeAddress.state}
                                                                     </td>
                                                                     <td class="px-4 py-4">
-                                                                        {employeeAddress.city}
+                                                                    {employeeAddress.city}
                                                                     </td>
                                                                     <td class="px-4 py-4">
-                                                                        {employeeAddress.zipCode}
+                                                                    {employeeAddress.zipCode}
                                                                     </td>
-                                                                    <td class=" px-6 py-4 flex gap-2 justify-center">
-                                                                        <Link to="/admin/administrators/viewadministrators/editAddress"><FaRegEdit className='text-green-400 pointer' size={20} /></Link>
-                                                                        <span><MdOutlineDeleteOutline className='text-red-400 pointer' size={20} /></span>
+                                                                    <td class="px-6 py-4 flex gap-2 justify-center">
+                                                                        <Link to="/admin/employees/viewemployees/editemployeesaddress"><FaRegEdit className='text-green-400 pointer' size={20} /></Link >
+
+                                                                       <Link onClick={()=>deleteAdministratorAddress(employeeAddress._id)}><MdOutlineDeleteOutline className='text-red-400 pointer' size={20}/></Link> 
+
                                                                     </td>
                                                                 </tr>
-
                                                             ))}
                                                         </tbody>
                                                     </table>
