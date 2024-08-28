@@ -399,7 +399,7 @@ const ViewEmployees = () => {
                                                                     {employeeAddress.zipCode}
                                                                     </td>
                                                                     <td class="px-6 py-4 flex gap-2 justify-center">
-                                                                        <Link to="/admin/employees/viewemployees/editemployeesaddress"><FaRegEdit className='text-green-400 pointer' size={20} /></Link >
+                                                                        <Link to={`/admin/employees/viewemployees/editemployeesaddress/${employeeAddress._id}`}><FaRegEdit className='text-green-400 pointer' size={20} /></Link >
 
                                                                        <Link onClick={()=>deleteAdministratorAddress(employeeAddress._id)}><MdOutlineDeleteOutline className='text-red-400 pointer' size={20}/></Link> 
 

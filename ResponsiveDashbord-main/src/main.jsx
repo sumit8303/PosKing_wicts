@@ -163,7 +163,7 @@ const router = createBrowserRouter(
         <Route path='/admin/employees/viewemployees/:id' element={<ViewEmployees/>} />
         <Route path='/admin/employees/editemployees/:id' element={<EditEmployees/>} />
         <Route path='/admin/employees/viewemployees/employeesaddress' element={<EmployeesAddress/>} />
-        <Route path='/admin/employees/viewemployees/editemployeesaddress' element={<EditEmployeesAddress/>} />
+        <Route path='/admin/employees/viewemployees/editemployeesaddress/:id' element={<EditEmployeesAddress/>} />
         <Route path='/admin/employees/viewemployees/employeesaddress/addresscategory' element={<EmpAddCategory/>} />
         <Route path='/admin/salesReport' element={<SalesReport/>} />
         <Route path='/admin/productsReport' element={<ProductsReport/>} />

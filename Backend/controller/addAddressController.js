@@ -45,8 +45,40 @@ try {
 }
 
 
-exports.viewAdministratorAddress =  async (req, res) => {
+exports.viewEmployeeAddress =  async (req, res) => {
     let id = req.params.id
     let data = await addressemployee.find({ _id: id })
     res.json(data)
 }
+
+
+
+
+exports.updateEmployeeAddress = async (req, res) => {
+    let _id = req.params._id;
+    let {name,email,phoneNumber,city,country,state,zipCode,streetAddress}=req.body;
+
+
+    try {
+        let findCustomer = await addressemployee.findById(_id);
+        if (findCustomer) {
+            findCustomer.name = name;
+            findCustomer.email = email;
+            findCustomer.phoneNumber = phoneNumber;
+            findCustomer.city = city;
+            findCustomer.country = country;
+            findCustomer.state = state;
+            findCustomer.zipCode = zipCode;
+            findCustomer.streetAddress = streetAddress;
+
+
+            await findCustomer.save();
+
+            return res.json({ success: true, message: "Administrator updated successfully", findCustomer });
+        } else {
+            return res.status(404).json({ success: false, message: "Administrator not found" });
+        }
+    } catch (error) {
+        return res.status(400).json({ success: false, error: error.message });
+    }
+};

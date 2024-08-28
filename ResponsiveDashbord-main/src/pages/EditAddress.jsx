@@ -65,7 +65,7 @@ const EditAddress = () => {
 
                 <div className=" p-2 relative top-5 my-5 mt-5 antialiased">
                     <div className="text-xl md:py-5 py-3">Dashboard /  <span className='text-gray font-semibold'>Administrators /</span>
-                        <span className='text-gray font-semibold'> Edit Aress</span>
+                        <span className='text-gray font-semibold'> Edit Address</span>
                     </div>
                 </div>
 

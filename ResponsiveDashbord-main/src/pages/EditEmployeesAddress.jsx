@@ -5,7 +5,7 @@ import { FaFileExport } from "react-icons/fa";
 import { CiCirclePlus } from "react-icons/ci";
 import Table from '../components/Table';
 import { IoSearchSharp } from "react-icons/io5";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FaCircleCheck } from "react-icons/fa6";
 import { MdOutlinePublishedWithChanges } from "react-icons/md";
 import axios from 'axios';
@@ -13,8 +13,34 @@ import axios from 'axios';
 
 
 const EditEmployeesAddress = () => {
-    
+    const navigation = useNavigate()
     const [showCategory, setShowCategory] = useState([])
+    const [employeeAddress, setEmployeeAddress] = useState({
+        name : "",
+        email : "",
+        phoneNumber : "",
+        country : "",
+        state : "",
+        city : "",
+        zipCode : "",
+        streetAddress : "",
+    })
+    const {name, email, phoneNumber, country, state, city, zipCode, streetAddress} = employeeAddress
+
+    function handleChange(e){
+        setEmployeeAddress({...employeeAddress, [e.target.name]: e.target.value})
+    }
+
+    let {id} = useParams()
+    useEffect(()=>{
+        viewEmployeeAddress()
+    },[])
+    async function viewEmployeeAddress() {
+        let result = await axios.get(`http://localhost:4000/api/viewAddressEmployee/${id}`)
+        setEmployeeAddress(result.data[0]) 
+    }
+
+    
     useEffect(() => {
         getAddressCategory()
     }, [])
@@ -23,6 +49,11 @@ const EditEmployeesAddress = () => {
         setShowCategory(result.data)
     }
 
+    async function handleSubmit(e) {
+        e.preventDefault()
+        await axios.put(`http://localhost:4000/api/updateEmployeeAddress/${id}`, employeeAddress)
+        navigation('/admin/employees')   
+    }
 
     const [open, Setopen] = useState(false)
 
@@ -95,7 +126,7 @@ const EditEmployeesAddress = () => {
 
 
                         {/* -----------From-------------------- */}
-                        <form action="" method="post">
+                        <form action="" method="post" onSubmit={handleSubmit}>
                             <div className="flex  justify-between  my-1 p-1  ">
 
                                 <div className="w-full">
@@ -115,6 +146,9 @@ const EditEmployeesAddress = () => {
                                                     <input
                                                         className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                         type="text"
+                                                        name='name'
+                                                        value={name}
+                                                        onChange={handleChange}
                                                     ></input>
                                                 </div>
                                             </div>
@@ -129,6 +163,9 @@ const EditEmployeesAddress = () => {
                                                     <input
                                                         className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                         type="text"
+                                                        name='email'
+                                                        value={email}
+                                                        onChange={handleChange}
                                                     ></input>
                                                 </div>
                                             </div>
@@ -144,6 +181,9 @@ const EditEmployeesAddress = () => {
                                                     <input
                                                         className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                         type="number"
+                                                        name='phoneNumber'
+                                                        value={phoneNumber}
+                                                        onChange={handleChange}
                                                     ></input>
                                                 </div>
                                             </div>
@@ -158,8 +198,8 @@ const EditEmployeesAddress = () => {
                                                         Country<span className='text-success px-1'>*</span>
                                                     </label>
                                                     <div className="mt-2">
-                                                        <select className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50">
-                                                            <option value="">---Select Category---</option>
+                                                        <select className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"name="country" value={country} onChange={handleChange}>
+                                                            <option >---Select Category---</option>
                                                             {showCategory.map((data) => (
                                                                 <option>{data.country}</option>
                                                             ))}
@@ -186,7 +226,8 @@ const EditEmployeesAddress = () => {
                                                             className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                             type="text"
                                                             name='state'
-                                                            
+                                                            value={state}
+                                                            onChange={handleChange}
                                                         ></input>
                                                     </div>
                                                 </div>
@@ -205,7 +246,8 @@ const EditEmployeesAddress = () => {
                                                             className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                             type="text"
                                                             name='city'
-                                                            
+                                                            value={city}
+                                                            onChange={handleChange}
                                                         ></input>
                                                     </div>
                                                 </div>
@@ -221,6 +263,9 @@ const EditEmployeesAddress = () => {
                                                     <input
                                                         className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                         type="text"
+                                                        name='zipCode'
+                                                        value={zipCode}
+                                                        onChange={handleChange}
                                                     ></input>
                                                 </div>
                                             </div>
@@ -234,6 +279,9 @@ const EditEmployeesAddress = () => {
                                                     <input
                                                         className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                         type="text"
+                                                        name='streetAddress'
+                                                        value={streetAddress}
+                                                        onChange={handleChange}
                                                     ></input>
                                                 </div>
                                             </div>
@@ -256,7 +304,7 @@ const EditEmployeesAddress = () => {
 
                                             <div className="px-3 flex justify-around  gap-2 items-center py-1.5  font-larze text-white bg-success  focus:ring-4 focus:outline-none  rounded-md ">
                                                 <FaCircleCheck className=' ' />
-                                                <button type="button" >
+                                                <button type="submit" >
                                                     Save
                                                 </button>
                                             </div>
