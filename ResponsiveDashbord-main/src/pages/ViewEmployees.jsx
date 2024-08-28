@@ -23,6 +23,7 @@ const ViewEmployees = () => {
 
     const { id } = useParams()
     const [data, setData] = useState([])
+    const [employeeAddress, setEmployeeAddress] = useState([])
 
     let navigation = useNavigate()
 
@@ -55,8 +56,18 @@ const ViewEmployees = () => {
         navigation('/admin/employees')
     }
 
+    const [selectImage, setSelectImage] = useState()
 
-    const [employeeAddress, setEmployeeAddress] = useState([])
+
+    const [activeTab, setActiveTab] = useState('tab1');
+
+    const handleTabChange = (tab) => {
+        setActiveTab(tab);
+    };
+
+
+
+
 
     useEffect(() => {
         getEmployeeAddress()
@@ -67,6 +78,7 @@ const ViewEmployees = () => {
         setEmployeeAddress(result.data)
         console.log(result.data)
     }
+
     async function deleteAdministratorAddress(_id) {
         const result = confirm("Are you sure to delete")
         if(result === true){
@@ -74,16 +86,6 @@ const ViewEmployees = () => {
             getEmployeeAddress()
         }
     }
-    
-
-    const [selectImage, setSelectImage] = useState()
-
-
-    const [activeTab, setActiveTab] = useState('tab1');
-
-    const handleTabChange = (tab) => {
-        setActiveTab(tab);
-    };
 
 
     return (
