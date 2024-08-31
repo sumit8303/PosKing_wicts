@@ -5,5 +5,7 @@ const AdministratorAddressDetails = require('../controller/AdministratorAddress.
 
 router.post('/administratorAddress', AdministratorAddressDetails.AdministratorAddressDetails)
 router.get('/getAllAdminstrator', AdministratorAddressDetails.AdminstratorAllAddress)
-
+router.delete('/deleteAdministratorAddress/:_id', AdministratorAddressDetails.deleteAdministratorAddress)
+router.get('/viewAdministratorAddress/:id', AdministratorAddressDetails.viewAdministratorAddress)
+router.put('/UpdateAdministratorAddress/:_id', AdministratorAddressDetails.updateAdministratorAddress)
 module.exports = router

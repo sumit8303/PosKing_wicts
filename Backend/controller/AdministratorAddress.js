@@ -56,3 +56,68 @@ exports.deleteAdministratorAddress=async(req,res)=>{
         return res.status(400).json({success:"false",error:error.message})
     }
 }
+
+
+
+// ------------------------------------------------Administrators-View-------------------------------
+
+exports.viewAdministratorAddress =  async (req, res) => {
+    let id = req.params.id
+    let data = await AddressAdministrator.find({ _id: id })
+    res.json(data)
+}
+
+
+
+
+// ------------------Update-Administrator--------------------------
+
+
+// exports.updateAdministratorAddress=async(req,res)=>{
+//     let _id=req.params._id;
+
+// let {name,city,street,country,phoneNumber,zipCode,state}=req.body;
+//     try {
+//         let findCustomer=await AddressAdministrator.findByIdAndUpdate({_id:_id})
+//         if(findCustomer){
+// let updateCustomer= await AddressAdministrator.updateOne({_id:_id}, { $set:{name: name,zipCode:zipCode,city:city,street:street,country:country,phoneNumber:phoneNumber,state:state}})
+
+//             return res.send.json({success:true,message:"Employees updated successfully",updateCustomer})
+//         }
+//     } catch (error) {
+//         return res.status(400).json({success:"false",error:error.message})
+//     }
+// }
+
+
+
+
+
+exports.updateAdministratorAddress = async (req, res) => {
+    let _id = req.params._id;
+    let {name,email,phoneNumber,city,country,state,zipCode,streetAddress}=req.body;
+
+
+    try {
+        let findCustomer = await AddressAdministrator.findById(_id);
+        if (findCustomer) {
+            findCustomer.name = name;
+            findCustomer.email = email;
+            findCustomer.phoneNumber = phoneNumber;
+            findCustomer.city = city;
+            findCustomer.country = country;
+            findCustomer.state = state;
+            findCustomer.zipCode = zipCode;
+            findCustomer.streetAddress = streetAddress;
+
+
+            await findCustomer.save();
+
+            return res.json({ success: true, message: "Administrator updated successfully", findCustomer });
+        } else {
+            return res.status(404).json({ success: false, message: "Administrator not found" });
+        }
+    } catch (error) {
+        return res.status(400).json({ success: false, error: error.message });
+    }
+};

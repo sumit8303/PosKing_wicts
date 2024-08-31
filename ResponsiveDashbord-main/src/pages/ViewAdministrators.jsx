@@ -73,6 +73,13 @@ const ViewAdministrators = () => {
     }
 
 
+    async function deleteAdministratorAddress(_id) {
+        const result = confirm("Are you sure to delete")
+        if (result === true) {
+            await axios.delete(`http://localhost:4000/api/deleteAdministratorAddress/${_id}`)
+            getAdministratorAddress()
+        }
+    }
 
 
     return (
@@ -386,9 +393,9 @@ const ViewAdministrators = () => {
                                                                         {administratorAddress.zipCode}
                                                                     </td>
                                                                     <td class="px-6 py-4 flex gap-2 justify-center">
-                                                                        <Link to="/admin/administrators/viewadministrators/editAddress"><FaRegEdit className='text-green-400 pointer' size={20} /></Link>
+                                                                        <Link to={`/admin/administrators/viewadministrators/editAddress/${administratorAddress._id}`}><FaRegEdit className='text-green-400 pointer' size={20} /></Link>
                                                                         
-                                                                        <span><MdOutlineDeleteOutline className='text-red-400 pointer' size={20} /></span>
+                                                                        <Link onClick={() => deleteAdministratorAddress(administratorAddress._id)}><MdOutlineDeleteOutline className='text-red-400 pointer' size={20} /></Link>
                                                                     </td>
                                                                 </tr>
                                                             ))}

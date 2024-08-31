@@ -16,7 +16,7 @@ let AdministratorAddressSchema=new mongoose.Schema({
 
     phoneNumber:Number,
 
-    streetCode:String,
+    streetAddress:String,
    
 
   
