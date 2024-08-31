@@ -28,12 +28,12 @@ const ViewProducts = () => {
             <section>
                 <div className="  text-neutral-600 mx-auto text-md antialiased font-normal  p-5   ">
 
-                    <div className=" p-2 relative top-5 my-5 mt-5 antialiased">
-                        <div className="text-xl md:py-5 py-3">Dashboard /
-                            <span className='text-gray font-semibold'>Products /</span>
-                            <span className='text-gray font-semibold'>View Products</span>
-                        </div>
-                    </div>
+          <div className=" p-2 relative top-5 my-5 mt-5 antialiased">
+            <div className="text-xl md:py-5 py-3">Dashboard /
+              <span className='text-gray font-semibold'>Products / </span>
+              <span className='text-gray font-semibold'> View </span>
+            </div>
+          </div>
 
                     {/* ----------Start View---------*/}
                     <div className=" ">
@@ -76,8 +76,11 @@ const ViewProducts = () => {
 
   </div>
 
+              <hr className='my-2' />
+              {/* ---------------------------------------------------- */}
 
 
+              {/* ------------------------------- */}
 
 
                             <div className="flex  justify-between  my-1 p-1  ">

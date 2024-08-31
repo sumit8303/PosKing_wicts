@@ -1,40 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { IoSearchSharp } from "react-icons/io5";
-import posImage from '../images/POS/empty-cart.gif'
-import product from '../images/Products/products.avif'
-import Rating from '../components/Rating';
+import posImage from '../../images/POS/empty-cart.gif'
+import TopProducts from './posDashbord/Dashbord/TopProducts';
+import product from '../../images/Products/products.avif'
+import Rating from '../../components/Rating';
+import { Star, ChevronDown } from 'lucide-react'
+import { MdOutlineDeleteOutline } from "react-icons/md";
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 
 const POS = () => {
 
-
-  const [showCategory, setShowCategory] = useState([])
-  const [data, setData] = useState([])
-  const [records, setRecords] = useState([])
-
-  useEffect(() => {
-    axios.get("http://localhost:4000/api/getproductFilter")
-      .then(res => {
-        setData(res.data)
-        setRecords(res.data)
-        console.log(res.data)
-      })
-      .catch(err => console.log(err))
-  }, []);
-
-  const filter = (event) => {
-    setRecords(data.filter(f => f.productName.toLowerCase().includes(event.target.value)))
-  }
-
-  useEffect(() => {
-    getCategory()
-
-  }, [])
-  async function getCategory() {
-    let result = await axios.get(`http://localhost:4000/api/getCategory`)
-    setShowCategory(result.data)
-  }
   const Products = [
 
     {
@@ -163,19 +138,21 @@ const POS = () => {
                               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                             </svg>
                           </div>
-                          <input type="search" id="default-search" className="flex h-10  bg-white rounded-md w-full border border-gray bg-transparent md:px-[2.2rem] px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50" onChange={filter} placeholder="Search Here..." />
+                          <input type="search" id="default-search" className="flex h-10  bg-white rounded-md w-full border border-gray bg-transparent md:px-[2.2rem] px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50" placeholder="Search Here..." />
                         </div>
                       </div>
                     </div>
 
 
                     <div>
+
                       <div className="mt-2">
                         <select className="flex h-10 w-full rounded-md border border-gray bg-white px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50">
-                        <option value="">---Select Category---</option>
-                          {showCategory.map((data) => (
-                            <option>{data.alltypecategory}</option>
-                          ))}
+                          <option selected className='text-gray-400 '>Select Category</option>
+                          <option value="US">United States</option>
+                          <option value="CA">Canada</option>
+                          <option value="FR">France</option>
+                          <option value="DE">Germany</option>
                         </select>
 
                       </div>
@@ -187,10 +164,11 @@ const POS = () => {
                     <div>
                       <div className="mt-2">
                         <select className="flex h-10 w-full rounded-md border border-gray bg-white px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50">
-                          <option>---Select Brand---</option>
-                          {showCategory.map((data) => (
-                            <option>{data.brand}</option>
-                          ))}
+                          <option selected className='text-gray-400 '>Select Brand</option>
+                          <option value="US">United States</option>
+                          <option value="CA">Canada</option>
+                          <option value="FR">France</option>
+                          <option value="DE">Germany</option>
                         </select>
 
                       </div>
@@ -208,18 +186,18 @@ const POS = () => {
                   <div className=" grid md:grid-cols-1  sm:grid-cols-1 gap-5 xl:grid-cols-3  m-auto  my-1 p-1">
 
                     {
-                      records.map((items, index) => (
+                      Products.map((items, index) => (
 
                         <div key={index} onClick={() => showData(items)} className=" lg:w-55 lg:h-80 md:w-56  m-auto relative p-2 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
                           <a href="#">
                             <img
-                              src={`http://localhost:4000/${items.image}`}
+                              src={items.image}
                               alt="Product"
                               className=" object-fit  object-cover rounded-xl"
                             />
                             <div className="px-4 py-3 lg:w-64">
                               <p className="text-md font-bold text-black truncate block capitalize">
-                                {items.productName}
+                                {items.name}
                               </p>
 
                               <span className=" justify-between   flex  items-center h-2 py-3 text-sm text-black ">
@@ -232,7 +210,7 @@ const POS = () => {
 
                               <div className="flex items-center  md:w-3/4 mt-2 w-full ">
                                 <p className="text-md font-semibold text-black cursor-auto ">
-                                  ${items.sellingprice}
+                                  ${items.productPrice}
                                 </p>
                                 <del>
                                   <p className="text-sm text-gray-600 cursor-auto ml-2">${items.productDiscount}</p>
@@ -290,7 +268,7 @@ const POS = () => {
                           <option value="DE">Germany</option>
                         </select>
 
-                        <Link to='/admin/pos/addcustomers'>
+                        <Link to='/Manager/pos/addcustomers'>
                           <button
                             type="button"
                             className="inline-flex mb-2 items-center h-11 justify-center rounded-[.5rem] bg-success px-3.5 py-2.5 font-semibold leading-7 text-white "
@@ -328,7 +306,7 @@ const POS = () => {
                                         <div className="flex gap-2 border justify-center items-center  rounded-xl">
                                           <span className='bg-lightsuccess w-4 h-4 flex justify-center mx-1 text-white items-center rounded-full font-medium'> - </span> <span className='font-bold'>2</span> <span className='bg-lightsuccess mx-1 w-4 h-4 flex justify-center text-white items-center rounded-full font-medium'> + </span>
                                         </div>
-                                        {/* <div className="flex justify-center items-center gap-1 bg-red-100 rounded-xl px-3 text-red-500 text-sm"> <MdOutlineDeleteOutline/> Remove </div> */}
+                                        <div className="flex justify-center items-center gap-1 bg-red-100 rounded-xl px-3 text-red-500 text-sm"> <MdOutlineDeleteOutline/> Remove </div>
                                       </div>
 
                                     </div>
@@ -385,6 +363,7 @@ const POS = () => {
 
                         </div>
 
+
                       </div>
 
 
@@ -440,7 +419,7 @@ const POS = () => {
                     {/*header*/}
                     <div className="flex items-start p-4 w-full justify-between border-b border-solid border-blueGray-200 rounded-l">
                       <h3 className="text-2xl mb-2 font-semibold">
-                       {selectedProduct.brand}
+                        Modal Title
                       </h3>
                       <button
                         className=" mb-2 p-1 ml-auto bg-transparent shadow-xl border-0 bg-red-500 rounded-full text-black flex justify-center items-center float-right  leading-none font-semibold outline-none focus:outline-none"
@@ -455,13 +434,13 @@ const POS = () => {
                       <img
                         alt="Nike Air Max 21A"
                         className="h-64 w-full rounded object-cover  hover:shadow-lg  lg:h-96  lg:w-1/2 "
-                        src={`http://localhost:4000/${selectedProduct.image}`}
+                        src={selectedProduct.image}
                       />
                       <div className="mt-6 w-full  lg:mt-0 lg:w-1/2 lg:pl-10">
 
                         <div className=" border-b border-gray-300 ">
                           <h2 className="text-heading mb-3.5 text-lg font-bold md:text-xl lg:text-2xl 2xl:text-3xl">
-                            {selectedProduct.productName}
+                            {selectedProduct.name}
                           </h2>
                         </div>
                         <div className="border-b border-gray-300 pb-3 mt-4 ">
@@ -499,7 +478,7 @@ const POS = () => {
                         </div>
                         <div className="mt-5 flex items-center ">
                           <div className="text-heading pr-2 text-base font-bold md:pr-0 md:text-xl lg:pr-2 lg:text-2xl 2xl:pr-0 2xl:text-4xl">
-                            ${selectedProduct.sellingprice}
+                            ${selectedProduct.productPrice}
                           </div>
                           <span className="font-segoe pl-2 text-sm text-gray-400 line-through md:text-base lg:text-lg xl:text-xl">
                             ${selectedProduct.productDiscount}

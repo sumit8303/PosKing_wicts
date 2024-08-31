@@ -1,39 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
-import { FaAngleDown, FaFileExport } from "react-icons/fa";
+import { FaAngleDown } from "react-icons/fa";
 import { MdFilterListAlt } from "react-icons/md";
+import { FaFileExport } from "react-icons/fa";
 import { CiCirclePlus } from "react-icons/ci";
-import axios from 'axios';
-import EmployeesTable from '../components/EmployeesTable';
+import { IoSearchSharp } from "react-icons/io5";
+import { MdOutlineCalendarMonth } from "react-icons/md";
+import Calendar from '../../components/Calendar';
+import PurchasesTable from '../../components/PurchasesTable';
+import { FaCircleCheck } from "react-icons/fa6";
+import DamagesTable from '../../components/DamagesTable';
+import AdministratorsTable from '../../components/AdministratorsTable';
+import CustomersTable from '../../components/CustomersTable';
+import POSOrdersTable from '../../components/POSOrdersTable';
 
-const Employees = () => {
-    let [data, setData] = useState({
-        name: "",
-        email: "",
-        phoneNumber: "",
-    });
 
-    const { name, email, phoneNumber } = data;
 
-    function handleChange(e) {
-        setData({ ...data, [e.target.name]: e.target.value });
-    }
 
-    async function handleSubmit(e) {
-        e.preventDefault();
-        try {
-            const response = await axios.get('http://localhost:4000/api/filterEmployees', {
-                params: data,
-            });
-            console.log("Data found:", response.data);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    }
+const POSOrders = () => {
 
-    const [calender, setCalender] = useState(false);
-    const toggleMenu = () => {
-        setCalender(!calender);
+    const [calender, Setcalender] = useState(false)
+    const MytoggleMenu = () => {
+        Setcalender(!calender)
     }
 
     const [open, Setopen] = useState(false)
@@ -49,7 +37,7 @@ const Employees = () => {
                 <div className="  text-neutral-600 mx-auto text-md antialiased font-normal  p-5   ">
 
                     <div className=" p-2 relative top-5 my-5 mt-5 antialiased">
-                        <div className="text-xl md:py-5 py-3">Dashboard /  <span className='text-gray font-semibold'>Employees</span></div>
+                        <div className="text-xl md:py-5 py-3">Dashboard /  <span className='text-gray font-semibold'>POS Orders</span></div>
                     </div>
                     {/* ----------Start---------- */}
 
@@ -62,7 +50,7 @@ const Employees = () => {
 
                                 <div className="md:flex  w-full justify-between ">
 
-                                    <div className="p-2 text-xl font-semibold">Employees</div>
+                                    <div className="p-2 text-xl font-semibold">POS Orders</div>
 
                                     <div className="md:flex md:space-y-0 space-y-2 mx-auto md:mx-0  gap-4 ">
 
@@ -92,15 +80,6 @@ const Employees = () => {
                                             </button>
                                             <FaAngleDown className=' ' />
                                         </div>
-
-                                        <Link to="/admin/employees/addemployees" className="px-3 flex justify-around bg-success text-white  gap-2 items-center md:py-1.5 py-1 font-larze  border border-success  focus:ring-4 focus:outline-none  rounded-md ">
-                                            <CiCirclePlus className='text-white size-5' />
-                                            <button type="button" >
-                                                Add Employees
-                                            </button>
-                                        </Link>
-
-
 
                                     </div>
 
@@ -133,7 +112,7 @@ const Employees = () => {
                                                     <div>
                                                         <label htmlFor="" className="text-base font-medium text-gray">
                                                             {' '}
-                                                            Name<span className='text-success px-1'>*</span>
+                                                            Order ID<span className='text-success px-1'>*</span>
                                                         </label>
                                                         <div className="mt-2">
                                                             <input
@@ -142,34 +121,6 @@ const Employees = () => {
                                                             ></input>
                                                         </div>
                                                     </div>
-
-                                                    <div>
-                                                        <label htmlFor="" className="text-base font-medium text-gray">
-                                                            {' '}
-                                                            Email<span className='text-success px-1'>*</span>
-                                                        </label>
-                                                        <div className="mt-2">
-                                                            <input
-                                                                className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                                                                type="email"
-                                                            ></input>
-                                                        </div>
-                                                    </div>
-
-
-                                                    <div>
-                                                        <label htmlFor="" className="text-base font-medium text-gray">
-                                                            {' '}
-                                                            Phone<span className='text-success px-1'>*</span>
-                                                        </label>
-                                                        <div className="mt-2">
-                                                            <input
-                                                                className="flex h-10 rounded-md w-full border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                                                                type="text"
-                                                            ></input>
-                                                        </div>
-                                                    </div>
-
 
                                                     <div>
                                                         <label htmlFor="" className="text-base font-medium text-gray">
@@ -187,23 +138,10 @@ const Employees = () => {
 
                                                         </div>
                                                     </div>
-
-
-
-                                                </div>
-
-
-                                                {/* ------------------------End--------------------------------- */}
-
-
-                                                <div className=" p-3 grid md:grid-cols-2 md:gap-5 xl:grid-cols-4  mx-auto ">
-
-
-
-                                                <div>
+                                                    <div>
                                                         <label htmlFor="" className="text-base font-medium text-gray">
                                                             {' '}
-                                                            Role<span className='text-success px-1'>*</span>
+                                                            Customer<span className='text-success px-1'>*</span>
                                                         </label>
                                                         <div className="mt-2">
                                                             <select className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50">
@@ -219,7 +157,24 @@ const Employees = () => {
 
 
 
+                                                    <div>
+                                                        <label htmlFor="" className="text-base font-medium text-gray">
+                                                            {' '}
+                                                            Date<span className='text-success px-1'>*</span>
+                                                        </label>
+                                                        <div className="mt-2">
+                                                            <input
+                                                                className="flex h-10 rounded-md w-full border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                                                type="date"
+                                                            ></input>
+                                                        </div>
+                                                    </div>
+
+
                                                 </div>
+
+
+                                                {/* ------------------------End--------------------------------- */}
 
 
 
@@ -259,7 +214,7 @@ const Employees = () => {
 
                                 <div className="w-full">
 
-<EmployeesTable/>
+<POSOrdersTable/>
 
                                 </div>
                             </div>
@@ -285,4 +240,4 @@ const Employees = () => {
     )
 }
 
-export default Employees
+export default POSOrders

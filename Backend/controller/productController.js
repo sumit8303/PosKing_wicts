@@ -22,7 +22,7 @@ exports.saveProduct = async (req, res) => {
         unit: req.body.unit,
         weight: req.body.weight,
         tags: req.body.tags,
-
+        
         description: req.body.description,
         image: req.file.filename
      })

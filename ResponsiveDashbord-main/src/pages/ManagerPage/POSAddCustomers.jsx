@@ -1,58 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { FaAngleDown } from "react-icons/fa";
-import { MdFilterListAlt } from "react-icons/md";
-import { FaFileExport } from "react-icons/fa";
-import { CiCirclePlus } from "react-icons/ci";
-import Table from '../components/Table';
+"use client";
+import React, { useState } from 'react'
 import { IoSearchSharp } from "react-icons/io5";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FaCircleCheck } from "react-icons/fa6";
 import { MdOutlinePublishedWithChanges } from "react-icons/md";
-import axios from 'axios';
 
 
 
-const Address = () => {
-    const navigation = useNavigate()
-    const [showCategory, setShowCategory] = useState([])
-    const [addAddress, setAddAddress] = useState({
-        name: "",
-        email: "",
-        city: "",
-        phoneNumber: "",
-        zipCode: "",
-        streetAddress: "",
-        state: "",
-        country: "",
-    })
-    const { name, email, city, phoneNumber, zipCode, streetAddress, state, country } = addAddress
-
-    function handleChange(e) {
-        setAddAddress({ ...addAddress, [e.target.name]: e.target.value })
-    }
-
-
-    async function handleSubmit(e) {
-        e.preventDefault()
-        await axios.post('http://localhost:4000/api/administratorAddress', addAddress)
-        navigation("/admin/administrators")
-
-    }
-
-    useEffect(() => {
-        getAddressCategory()
-    }, [])
-    async function getAddressCategory() {
-        const result = await axios.get('http://localhost:4000/api/getAllCategory')
-        setShowCategory(result.data)
-    }
-
-
-    const [open, Setopen] = useState(false)
-
-    const toggleFilter = () => {
-        Setopen(!open)
-    }
+const POSAddCustomers = () => {
 
 
     const [searchTerm, setSearchTerm] = useState('');
@@ -78,7 +33,6 @@ const Address = () => {
 
 
 
-
     return (
         <>
 
@@ -86,13 +40,14 @@ const Address = () => {
                 <div className="  text-neutral-600 mx-auto text-md antialiased font-normal  p-5   ">
 
                     <div className=" p-2 relative top-5 my-5 mt-5 antialiased">
-                        <div className="text-xl md:py-5 py-3">Dashboard /  <span className='text-gray font-semibold'>Administrators /</span>
-                            <span className='text-gray font-semibold'>Add Address</span>
+                        <div className="text-xl md:py-5 py-3">Dashboard /
+                            <span className='text-gray font-semibold'>POS /</span>
+                            <span className='text-gray font-semibold'>Create
+                            </span>
                         </div>
                     </div>
 
-                    {/* ----------Start---------- */}
-
+                    {/* ----------Start Form---------*/}
 
                     <div className=" ">
 
@@ -102,24 +57,24 @@ const Address = () => {
 
                                 <div className="md:flex  w-full justify-between ">
 
-                                    <div className="p-2 text-xl font-semibold">Create</div>
-
-                                    <div className="md:flex md:space-y-0 space-y-2 mx-auto md:mx-0  gap-4 ">
-
-                                        <Link to="/admin/administrators/viewadministrators" className="px-3 flex justify-around bg-gray text-white rounded-full gap-2 items-center md:py-1.5 py-1 font-larze hover:bg-black focus:ring-4 focus:outline-none  rounded-md ">
-                                            <span className='text-white'>X</span>
-                                        </Link>
-
+                                    <div className="p-2 text-xl font-semibold">Customers
                                     </div>
+
 
                                 </div>
 
+
+
+
                             </div>
 
+                            <hr className='my-2' />
+                            {/* ---------------------------------------------------- */}
 
 
                             {/* -----------From-------------------- */}
-                            <form action="" method="post" onSubmit={handleSubmit}>
+
+                            <form action="" method="post">
                                 <div className="flex  justify-between  my-1 p-1  ">
 
                                     <div className="w-full">
@@ -128,20 +83,17 @@ const Address = () => {
 
                                             {/* ---------------Start---------------------- */}
 
-                                            <div className=" p-3 grid md:grid-cols-2 md:gap-5 xl:grid-cols-4  mx-auto ">
+                                            <div className=" p-3 grid md:grid-cols-2 md:gap-5 xl:grid-cols-3  mx-auto ">
 
                                                 <div>
                                                     <label htmlFor="" className="text-base font-medium text-gray">
                                                         {' '}
-                                                        Full Name<span className='text-success px-1'>*</span>
+                                                        Name<span className='text-success px-1'>*</span>
                                                     </label>
                                                     <div className="mt-2">
                                                         <input
                                                             className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                             type="text"
-                                                            name='name'
-                                                            value={name}
-                                                            onChange={handleChange}
                                                         ></input>
                                                     </div>
                                                 </div>
@@ -155,15 +107,10 @@ const Address = () => {
                                                     <div className="mt-2">
                                                         <input
                                                             className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                                                            type="text"
-                                                            name='email'
-                                                            value={email}
-                                                            onChange={handleChange}
+                                                            type="email"
                                                         ></input>
                                                     </div>
                                                 </div>
-
-
 
                                                 <div>
                                                     <label htmlFor="" className="text-base font-medium text-gray">
@@ -174,122 +121,64 @@ const Address = () => {
                                                         <input
                                                             className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                             type="number"
-                                                            name='phoneNumber'
-                                                            value={phoneNumber}
-                                                            onChange={handleChange}
                                                         ></input>
                                                     </div>
                                                 </div>
-
-
-
-
-
-                                                <div>
-                                                    <label htmlFor="" className="text-base font-medium text-gray">
-                                                        {' '}
-                                                        Country<span className='text-success px-1'>*</span>
-                                                    </label>
-                                                    <div className="mt-2">
-                                                        <select className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                                                        name='country' value={country}
-                                                        onChange={handleChange}
-                                                        >
-                                                            <option value="">---Select Country---</option>
-                                                            {showCategory.map((data, index) => (
-                                                                <option key={index} value={data.country}>
-                                                                    {data.country}
-                                                                </option>
-                                                            ))}                                                        </select>
-
-                                                    </div>
-                                                </div>
-
-
 
                                             </div>
 
                                             {/* ------------------------------------- */}
 
-                                            <div className=" p-3 grid md:grid-cols-2 md:gap-5 xl:grid-cols-4  mx-auto ">
+                                            <div className=" p-3 grid md:grid-cols-2 md:gap-5 xl:grid-cols-3  mx-auto ">
 
-                                                <div>
+
+                                            <div>
                                                     <label htmlFor="" className="text-base font-medium text-gray">
                                                         {' '}
-                                                        State<span className='text-success px-1'>*</span>
+                                                        Status<span className='text-success px-1'>*</span>
                                                     </label>
-                                                    <div className="mt-2">
-                                                        <input
-                                                            className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                                                            type="text"
-                                                            name='state'
-                                                            value={state}
-                                                            onChange={handleChange}
-                                                        ></input>
+                                                    <div className="mt-2 flex  justify-between items-center ">
+                                                        <div class="flex w-full items-center  mb-4">
+                                                            <input id="Active" type="radio" value="Active" name="Status" className='accent-success h-4 w-4 ' />
+                                                            <label for="Active" class="ms-2 text-base font-medium text-gray">Active</label>
+                                                        </div>
+                                                        <div class="flex w-full items-center mb-4 ">
+                                                            <input id="Inactive" type="radio" value="Inactive" name="Status" className='accent-success h-4 w-4 ' />
+                                                            <label for="Inactive" class="ms-2 text-base font-medium text-gray">Inactive</label>
+                                                        </div>
                                                     </div>
                                                 </div>
 
 
 
-
-
                                                 <div>
                                                     <label htmlFor="" className="text-base font-medium text-gray">
                                                         {' '}
-                                                        City<span className='text-success px-1'>*</span>
+                                                        Password<span className='text-success px-1'>*</span>
                                                     </label>
                                                     <div className="mt-2">
                                                         <input
                                                             className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                             type="text"
-                                                            name='city'
-                                                            value={city}
-                                                            onChange={handleChange}
                                                         ></input>
-
                                                     </div>
                                                 </div>
-
-
+                                               
                                                 <div>
                                                     <label htmlFor="" className="text-base font-medium text-gray">
                                                         {' '}
-                                                        Zip Code<span className='text-success px-1'>*</span>
+                                                        Password Confirmation<span className='text-success px-1'>*</span>
                                                     </label>
                                                     <div className="mt-2">
                                                         <input
                                                             className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                             type="text"
-                                                            name='zipCode'
-                                                            value={zipCode}
-                                                            onChange={handleChange}
                                                         ></input>
                                                     </div>
                                                 </div>
-
-                                                <div>
-                                                    <label htmlFor="" className="text-base font-medium text-gray">
-                                                        {' '}
-                                                        Street Address<span className='text-success px-1'>*</span>
-                                                    </label>
-                                                    <div className="mt-2">
-                                                        <input
-                                                            className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                                                            type="text"
-                                                            name='streetAddress'
-                                                            value={streetAddress}
-                                                            onChange={handleChange}
-                                                        ></input>
-                                                    </div>
-                                                </div>
-
-
-
 
 
                                             </div>
-
-
 
 
                                             {/* ------------------------End--------------------------------- */}
@@ -306,12 +195,12 @@ const Address = () => {
                                                     </button>
                                                 </div>
 
-                                                <div className="px-3 flex justify-around  gap-2 items-center py-1.5  font-larze text-white bg-gray  focus:ring-4 focus:outline-none  rounded-md ">
+                                                <Link to="/admin/products" className="px-3 flex justify-around  gap-2 items-center py-1.5  font-larze text-white bg-gray  focus:ring-4 focus:outline-none  rounded-md ">
                                                     X
                                                     <button type="reset" >
                                                         Clear
                                                     </button>
-                                                </div>
+                                                </Link>
 
 
                                             </div>
@@ -322,26 +211,26 @@ const Address = () => {
                                     </div>
                                 </div>
                             </form>
+
+
+
+
                             {/* -----------From End-------------------- */}
-
-
 
 
                         </div>
 
-
-
                     </div>
 
-                    {/* ----------End-------------------- */}
+
+                    {/* ----------End Form---------- */}
+
                 </div>
 
-
             </section>
-
 
         </>
     )
 }
 
-export default Address
+export default POSAddCustomers

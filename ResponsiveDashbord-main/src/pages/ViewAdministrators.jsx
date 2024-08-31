@@ -44,12 +44,13 @@ const ViewAdministrators = () => {
         SetAdministrator({ ...administrator, [e.target.name]: e.target.value })
     }
 
-
     async function handleSubmit(e) {
         e.preventDefault()
         await axios.put(`http://localhost:4000/api/updateAdministrator/${id}`, administrator)
         navigation('/admin/administrators')
     }
+
+
 
 
     const [selectImage, setSelectImage] = useState()
@@ -66,12 +67,12 @@ const ViewAdministrators = () => {
     }, [])
 
     async function getAdministratorAddress() {
-        let result = await axios.get("http://localhost:4000/api/getAllEmployeesAdddress")
+        let result = await axios.get("http://localhost:4000/api/getAllAdminstrator")
         setadministratorAddress(result.data)
         console.log(result.data)
     }
 
-    
+
 
 
     return (
@@ -118,22 +119,22 @@ const ViewAdministrators = () => {
                                             Admin
                                         </div>
                                     </div>
-                                    <div className="my-2 px-6 flex mb-1 md:mb-0 justify-around w-full  gap-2 items-center py-1.5  font-larze text-white bg-success  focus:ring-4 focus:outline-none  rounded-md">
+                                    {/* <div className="my-2 px-6 flex mb-1 md:mb-0 justify-around w-full  gap-2 items-center py-1.5  font-larze text-white bg-success  focus:ring-4 focus:outline-none  rounded-md">
                                         <TiImage className=' ' />
-                                        {/* <input type="file" placeholder='Save' accept='image/*' onChange={(e)=>{
+                                        <input type="file" placeholder='Save' accept='image/*' onChange={(e)=>{
     const file = e.target.files?.[0];
     setSelectImage( file ? URL.createObjectURL(file): undefined);
-}}  className=' display-none '/>  */}
+}}  className=' display-none '/> 
                                         <button type="submit">
                                             Upload New Photo
                                         </button>
 
-                                    </div>
+                                    </div> */}
 
                                 </div>
 
 
-                                <div className="p-2">
+                                {/* <div className="p-2">
 
                                     <div className="md:mt-22 px-6 mb-1 md:mb-0 flex justify-around w-full  gap-2 items-center py-1.5 md:w-30 font-larze text-white bg-green-500  focus:ring-4 focus:outline-none  rounded-md ">
                                         <FaCircleCheck className=' ' />
@@ -141,10 +142,10 @@ const ViewAdministrators = () => {
                                             Save
                                         </button>
                                     </div>
-                                </div>
+                                </div> */}
 
 
-                                <div className="p-2">
+                                {/* <div className="p-2">
 
                                     <div className="md:mt-22 px-6 flex mb-1 md:mb-0 justify-around w-full  gap-2 items-center py-1.5 border border-red-500 md:w-30 font-larze text-red-500 bg-white  focus:ring-4 focus:outline-none  rounded-md ">
                                         <GrPowerReset className=' ' />
@@ -153,7 +154,7 @@ const ViewAdministrators = () => {
                                         </button>
                                     </div>
 
-                                </div>
+                                </div> */}
 
 
 
@@ -306,12 +307,12 @@ const ViewAdministrators = () => {
                                                         </button>
                                                     </Link>
 
-                                                    <Link to="/admin/administrators/viewadministrators/addCategory" className="px-3  flex justify-around md:w-fit w-full gap-2 ms-auto items-center py-1.5  font-larze text-white bg-success  focus:ring-4 focus:outline-none  rounded-md ">
+                                                    {/* <Link to="/admin/administrators/viewadministrators/addCategory" className="px-3  flex justify-around md:w-fit w-full gap-2 ms-auto items-center py-1.5  font-larze text-white bg-success  focus:ring-4 focus:outline-none  rounded-md ">
                                                         <CiCirclePlus className='size-5 ' />
                                                         <button type="submit" >
                                                             Add Category
                                                         </button>
-                                                    </Link>
+                                                    </Link> */}
 
                                                 </div>
 
@@ -358,36 +359,39 @@ const ViewAdministrators = () => {
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                                                <td class="px-4 py-4">
-                                                                    
-                                                                </td>
-                                                                <td class="px-4 py-4">
-                                                                    admin@example.com
-                                                                </td>
-                                                                <td class="px-4 py-4">
-                                                                    +880 1254875855
-                                                                </td>
-                                                                <td class="px-4 py-4">
-                                                                    House :31, Road: 9, Block: A, Mirpur 1
-                                                                </td>
-                                                                <td class="px-4 py-4">
-                                                                    Bangladesh
-                                                                </td>
-                                                                <td class="px-4 py-4">
-                                                                    Dhaka District
-                                                                </td>
-                                                                <td class="px-4 py-4">
-                                                                    Dhaka
-                                                                </td>
-                                                                <td class="px-4 py-4">
-                                                                    1216
-                                                                </td>
-                                                                <td class="px-6 py-4 flex gap-2 justify-center">
-                                                                    <Link to="/admin/administrators/viewadministrators/editAddress"><FaRegEdit className='text-green-400 pointer' size={20} /></Link>
-                                                                    <span><MdOutlineDeleteOutline className='text-red-400 pointer' size={20} /></span>
-                                                                </td>
-                                                            </tr>
+                                                            {Array.isArray(administratorAddress) && administratorAddress.map((administratorAddress) => (
+                                                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                                    <td class="px-4 py-4">
+                                                                        {administratorAddress.name}
+                                                                    </td>
+                                                                    <td class="px-4 py-4">
+                                                                        {administratorAddress.email}
+                                                                    </td>
+                                                                    <td class="px-4 py-4">
+                                                                        {administratorAddress.phoneNumber}
+                                                                    </td>
+                                                                    <td class="px-4 py-4">
+                                                                        {administratorAddress.streetAddress}
+                                                                    </td>
+                                                                    <td class="px-4 py-4">
+                                                                        {administratorAddress.country}
+                                                                    </td>
+                                                                    <td class="px-4 py-4">
+                                                                        {administratorAddress.state}
+                                                                    </td>
+                                                                    <td class="px-4 py-4">
+                                                                        {administratorAddress.city}
+                                                                    </td>
+                                                                    <td class="px-4 py-4">
+                                                                        {administratorAddress.zipCode}
+                                                                    </td>
+                                                                    <td class="px-6 py-4 flex gap-2 justify-center">
+                                                                        <Link to="/admin/administrators/viewadministrators/editAddress"><FaRegEdit className='text-green-400 pointer' size={20} /></Link>
+                                                                        
+                                                                        <span><MdOutlineDeleteOutline className='text-red-400 pointer' size={20} /></span>
+                                                                    </td>
+                                                                </tr>
+                                                            ))}
 
                                                         </tbody>
                                                     </table>

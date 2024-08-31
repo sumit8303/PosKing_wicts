@@ -63,6 +63,31 @@ async function getCategory(){
     Setopen(!open)
   }
 
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const options = ['Option 1', 'Option 2', 'Option 3'];
+
+
+
+  const handleBlur = () => {
+    // Delay hiding the dropdown to allow clicking on an option
+    setTimeout(() => setIsDropdownOpen(false), 200);
+  };
+
+  const handleFocus = () => {
+    setIsDropdownOpen(true);
+  };
+
+  const handleClick = (option) => {
+    setSearchTerm(option);
+    setIsDropdownOpen(false);
+  };
+
+
+
+
   return (
     <>
 
@@ -78,7 +103,7 @@ async function getCategory(){
 
           <div className=" ">
 
-            <div className=" mt-[2rem]  md:mt-0 border shadow-md md:p-2 bg-white rounded-md antialiased ">
+            <div className=" mt-[2rem]  md:mt-0  shadow-md md:p-2 bg-white rounded-md antialiased ">
 
               <div className="flex items-center justify-between  p-1  ">
 

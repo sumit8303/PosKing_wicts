@@ -122,7 +122,7 @@ async function getCategory(){
 
                     <div className=" ">
 
-                        <div className=" mt-[2rem]  md:mt-0 border shadow-md md:p-2 bg-white rounded-md antialiased ">
+                        <div className=" mt-[2rem]  md:mt-0  shadow-md md:p-2 bg-white rounded-md antialiased ">
 
                             <div className="flex items-center justify-between  p-1  ">
 
@@ -180,6 +180,8 @@ async function getCategory(){
                                                     <div className="mt-2">
 
                                                         <div className=' flex justify-around  w-full  border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 '>
+
+
 
                                                             <div className="relative  mx-auto  flex justify-around w-full   ">
                                                                 <input

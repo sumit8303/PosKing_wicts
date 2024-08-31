@@ -79,9 +79,9 @@ const ViewEmployees = () => {
         console.log(result.data)
     }
 
-    async function deleteAdministratorAddress(_id) {
+    async function deleteEmployeeAddress(_id) {
         const result = confirm("Are you sure to delete")
-        if(result === true){
+        if (result === true) {
             await axios.delete(`http://localhost:4000/api/deleteAddAddress/${_id}`)
             getEmployeeAddress()
         }
@@ -132,22 +132,22 @@ const ViewEmployees = () => {
                                             Stuff
                                         </div>
                                     </div>
-                                    <div className="my-2 px-6 flex mb-1 md:mb-0 justify-around w-full  gap-2 items-center py-1.5  font-larze text-white bg-success  focus:ring-4 focus:outline-none  rounded-md">
+                                    {/* <div className="my-2 px-6 flex mb-1 md:mb-0 justify-around w-full  gap-2 items-center py-1.5  font-larze text-white bg-success  focus:ring-4 focus:outline-none  rounded-md">
                                         <TiImage className=' ' />
-                                        {/* <input type="file" placeholder='Save' accept='image/*' onChange={(e)=>{
+                                        <input type="file" placeholder='Save' accept='image/*' onChange={(e)=>{
     const file = e.target.files?.[0];
     setSelectImage( file ? URL.createObjectURL(file): undefined);
-}}  className=' display-none '/>  */}
+}}  className=' display-none '/> 
                                         <button type="submit">
                                             Upload New Photo
                                         </button>
 
-                                    </div>
+                                    </div> */}
 
                                 </div>
 
 
-                                <div className="p-2">
+                                {/* <div className="p-2">
 
                                     <div className="md:mt-22 px-6 mb-1 md:mb-0 flex justify-around w-full  gap-2 items-center py-1.5 md:w-30 font-larze text-white bg-green-500  focus:ring-4 focus:outline-none  rounded-md ">
                                         <FaCircleCheck className=' ' />
@@ -156,9 +156,9 @@ const ViewEmployees = () => {
                                         </button>
                                     </div>
                                 </div>
+ */}
 
-
-                                <div className="p-2">
+                                {/* <div className="p-2">
 
                                     <div className="md:mt-22 px-6 flex mb-1 md:mb-0 justify-around w-full  gap-2 items-center py-1.5 border border-red-500 md:w-30 font-larze text-red-500 bg-white  focus:ring-4 focus:outline-none  rounded-md ">
                                         <GrPowerReset className=' ' />
@@ -167,7 +167,7 @@ const ViewEmployees = () => {
                                         </button>
                                     </div>
 
-                                </div>
+                                </div> */}
 
 
 
@@ -384,24 +384,24 @@ const ViewEmployees = () => {
                                                                     <td class="px-4 py-4">
                                                                         {employeeAddress.phoneNumber}                </td>
                                                                     <td class="px-4 py-4">
-                                                                    {employeeAddress.streetAddress}
+                                                                        {employeeAddress.streetAddress}
                                                                     </td>
                                                                     <td class="px-4 py-4">
-                                                                    {employeeAddress.country}
+                                                                        {employeeAddress.country}
                                                                     </td>
                                                                     <td class="px-4 py-4">
-                                                                    {employeeAddress.state}
+                                                                        {employeeAddress.state}
                                                                     </td>
                                                                     <td class="px-4 py-4">
-                                                                    {employeeAddress.city}
+                                                                        {employeeAddress.city}
                                                                     </td>
                                                                     <td class="px-4 py-4">
-                                                                    {employeeAddress.zipCode}
+                                                                        {employeeAddress.zipCode}
                                                                     </td>
                                                                     <td class="px-6 py-4 flex gap-2 justify-center">
                                                                         <Link to={`/admin/employees/viewemployees/editemployeesaddress/${employeeAddress._id}`}><FaRegEdit className='text-green-400 pointer' size={20} /></Link >
 
-                                                                       <Link onClick={()=>deleteAdministratorAddress(employeeAddress._id)}><MdOutlineDeleteOutline className='text-red-400 pointer' size={20}/></Link> 
+                                                                        <Link onClick={() => deleteEmployeeAddress(employeeAddress._id)}><MdOutlineDeleteOutline className='text-red-400 pointer' size={20} /></Link>
 
                                                                     </td>
                                                                 </tr>

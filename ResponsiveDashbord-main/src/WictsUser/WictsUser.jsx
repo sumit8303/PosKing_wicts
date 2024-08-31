@@ -15,7 +15,7 @@ const WictsUser = () => {
 
                     <div className="my-5 rounded-3xl  bg-red-400  ">
                         <div className="  m-auto ">
-                            <div className="    mx-auto">
+                            <div className="mx-auto">
                                 <div className=" relative bg-white w-full">
 
 

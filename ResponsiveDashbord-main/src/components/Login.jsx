@@ -150,12 +150,12 @@ const Login = () => {
                         </Link>
                       </div>
                       <div>
-                        <button
+                        <Link to="/Manager"
                           type="button"
                           className="inline-flex md:w-[10rem] w-full mb-2 items-center justify-center rounded-[.5rem] bg-loginManager px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
                         >
                           Manager
-                        </button>
+                        </Link>
                       </div>
 
                       <div>

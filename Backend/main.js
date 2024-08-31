@@ -34,6 +34,9 @@ db().then(async () => {
 
     const addressCategoryRoute = require('./routes/employeeAddressCategoryRoute.js')
 
+
+    const administratorAddressRoute = require('./routes/administratorAddressRoute.js')
+
     app.use('/api', productRoute)
 
 
@@ -50,5 +53,7 @@ db().then(async () => {
 
 
     app.use('/api', addressCategoryRoute)
+
+    app.use('/api', administratorAddressRoute)
 })
 .catch(err => console.log(err))

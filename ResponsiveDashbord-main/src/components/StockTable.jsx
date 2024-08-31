@@ -48,8 +48,9 @@ const StockTable = () => {
         <thead className='text-xs  text-white text-gray-700 uppercase bg-gray-300'>
           <tr className=''>
             <th scope="col" class="px-6 py-3" >Name</th>
-            <th scope="col" class="px-6 py-3" >Quantity</th>
+            <th scope="col" class="px-6 py-3" >Sold Quantity</th>
             <th scope="col" class="px-6 py-3" >Status</th>
+            <th scope="col" class="px-6 py-3" >Remaining Quantity</th>
           </tr>
         </thead>
         <tbody className=' '>
@@ -58,6 +59,7 @@ const StockTable = () => {
               <td className='px-6 py-4'>{product.productName}</td>
               <td className='px-6 py-4'>{product.maximumpurchasequantity}</td>
               <td className='px-6 py-4'>{product.status}</td>
+              <td className='px-6 py-4'>{product.remainingquantity}</td>
             </tr>
           ))}
         </tbody>

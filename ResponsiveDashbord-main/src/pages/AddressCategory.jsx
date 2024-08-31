@@ -13,6 +13,8 @@ import { MdOutlinePublishedWithChanges } from "react-icons/md";
 
 const AddressCategory = () => {
 
+    
+
 
     const [open, Setopen] = useState(false)
 
@@ -97,32 +99,10 @@ const AddressCategory = () => {
                                         <div className=" p-3 grid md:grid-cols-2 md:gap-5 xl:grid-cols-3  mx-auto ">
 
 
-                                            <div>
-                                                <label htmlFor="" className="text-base font-medium text-gray">
-                                                    {' '}
-                                                    State<span className='text-success px-1'>*</span>
-                                                </label>
-                                                <div className="mt-2">
-                                                    <input
-                                                        className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                                                        type="text"
-                                                    ></input>
-                                                </div>
-                                            </div>
+                                          
 
 
-                                            <div>
-                                                <label htmlFor="" className="text-base font-medium text-gray">
-                                                    {' '}
-                                                    City<span className='text-success px-1'>*</span>
-                                                </label>
-                                                <div className="mt-2">
-                                                    <input
-                                                        className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                                                        type="text"
-                                                    ></input>
-                                                </div>
-                                            </div>
+                                           
 
                                             <div>
                                                 <label htmlFor="" className="text-base font-medium text-gray">
@@ -133,6 +113,7 @@ const AddressCategory = () => {
                                                     <input
                                                         className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                         type="text"
+
                                                     ></input>
                                                 </div>
                                             </div>

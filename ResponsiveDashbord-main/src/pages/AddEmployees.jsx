@@ -244,7 +244,7 @@ const AddEmployees = () => {
                                                             onChange={handleChange}
                                                         ></input>
                                                     </div>
-                                                </div>  
+                                                </div>
 
 
 
