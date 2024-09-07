@@ -1,5 +1,3 @@
-
-
 "use client";
 import React, { useState } from 'react'
 import { IoSearchSharp } from "react-icons/io5";
@@ -13,29 +11,62 @@ import axios from 'axios'
 const AddEmployees = () => {
 
     const navigation = useNavigate()
+    let [name, setName] = useState('');
+    let [email, setEmail] = useState('');
+    let [phoneNumber, setPhoneNumber] = useState('');
+    let [status, setStatus] = useState('');
+    let [password, setPassword] = useState('');
+    let [confirmPassword, setConfirmPassword] = useState('');
+    let [role, setRole] = useState('');
+    let [image, setImage] = useState(null)
 
-    const [data, setData] = useState({
-        name : "",
-        email: "",
-        phoneNumber: "",
-        status: "",
-        password: "",
-        confirmPassword: "",
-        role: ""
-    })
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const user = new FormData();
+        user.append('image', image);
+        user.append('name', name);
+        user.append('email', email);
+        user.append('password', password);
+        user.append('confirmPassword', confirmPassword);
+        user.append('phoneNumber', phoneNumber);
+        user.append('role', role);
+        user.append('status', status);
 
-    const {name, email, password, confirmPassword, phoneNumber, status, role} = data
 
-    function handleChange(e){
-        setData({...data, [e.target.name]:e.target.value})
+        try {
+            await axios.post('http://localhost:4000/api/registerEmployee', user, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+
+            navigation("/admin/employees")
+        } catch (error) {
+            alert('Failed to upload product.');
+        }
     }
+    //     const [data, setData] = useState({
+    //         name : "",
+    //         email: "",
+    //         phoneNumber: "",
+    //         status: "",
+    //         password: "",
+    //         confirmPassword: "",
+    //         role: ""
+    //     })
 
-   async function handleSubmit(e) {
-    e.preventDefault()
-    await axios.post("http://localhost:4000/api/registerEmployee", data)
-    navigation("/admin/employees")
-   }
-   
+    //     const {name, email, password, confirmPassword, phoneNumber, status, role} = data
+
+    //     function handleChange(e){
+    //         setData({...data, [e.target.name]:e.target.value})
+    //     }
+
+    //    async function handleSubmit(e) {
+    //     e.preventDefault()
+    //     await axios.post("http://localhost:4000/api/registerEmployee", data)
+    //     navigation("/admin/employees")
+    //    }
+
 
 
     const [searchTerm, setSearchTerm] = useState('');
@@ -123,7 +154,7 @@ const AddEmployees = () => {
                                                             type="text"
                                                             name='name'
                                                             value={name}
-                                                            onChange={handleChange}
+                                                            onChange={(e) => setName(e.target.value)}
                                                         ></input>
                                                     </div>
                                                 </div>
@@ -140,7 +171,7 @@ const AddEmployees = () => {
                                                             type="email"
                                                             name='email'
                                                             value={email}
-                                                            onChange={handleChange}
+                                                            onChange={(e) => setEmail(e.target.value)}
                                                         ></input>
                                                     </div>
                                                 </div>
@@ -156,7 +187,8 @@ const AddEmployees = () => {
                                                             type="number"
                                                             name='phoneNumber'
                                                             value={phoneNumber}
-                                                            onChange={handleChange}
+                                                            onChange={(e) => setPhoneNumber(e.target.value)}
+
                                                         ></input>
                                                     </div>
                                                 </div>
@@ -168,18 +200,19 @@ const AddEmployees = () => {
                                             <div className=" p-3 grid md:grid-cols-2 md:gap-5 xl:grid-cols-3  mx-auto ">
 
 
-                                            <div>
+                                                <div>
                                                     <label htmlFor="" className="text-base font-medium text-gray">
                                                         {' '}
                                                         Status<span className='text-success px-1'>*</span>
                                                     </label>
                                                     <div className="mt-2 flex  justify-between items-center ">
                                                         <div class="flex w-full items-center  mb-4">
-                                                            <input id="Active" type="radio" value="Active" name="status" onChange={handleChange} className='accent-success h-4 w-4 ' />
+                                                            <input id="Active" type="radio" value="Active" name="status" onChange={(e) => setStatus(e.target.value)}
+                                                                className='accent-success h-4 w-4 ' />
                                                             <label for="Active" class="ms-2 text-base font-medium text-gray">Active</label>
                                                         </div>
                                                         <div class="flex w-full items-center mb-4 ">
-                                                            <input id="Inactive" type="radio" value="Inactive" name="status" onChange={handleChange} className='accent-success h-4 w-4 ' />
+                                                            <input id="Inactive" type="radio" value="Inactive" name="status" onChange={(e) => setStatus(e.target.value)} className='accent-success h-4 w-4 ' />
                                                             <label for="Inactive" class="ms-2 text-base font-medium text-gray">Inactive</label>
                                                         </div>
                                                     </div>
@@ -198,11 +231,11 @@ const AddEmployees = () => {
                                                             type="text"
                                                             name='password'
                                                             value={password}
-                                                            onChange={handleChange}
+                                                            onChange={(e) => setPassword(e.target.value)}
                                                         ></input>
                                                     </div>
                                                 </div>
-                                               
+
                                                 <div>
                                                     <label htmlFor="" className="text-base font-medium text-gray">
                                                         {' '}
@@ -214,7 +247,7 @@ const AddEmployees = () => {
                                                             type="text"
                                                             name='confirmPassword'
                                                             value={confirmPassword}
-                                                            onChange={handleChange}
+                                                            onChange={(e) => setConfirmPassword(e.target.value)}
                                                         ></input>
                                                     </div>
                                                 </div>
@@ -226,11 +259,11 @@ const AddEmployees = () => {
                                             {/* ------------------------End--------------------------------- */}
 
 
-                                            <div className=" p-3 grid md:grid-cols-2 md:gap-5 xl:grid-cols-4  mx-auto ">
+                                            <div className="  p-3 grid md:grid-cols-2 md:gap-5 xl:grid-cols-3  mx-auto ">
 
 
 
-                                            <div>
+                                                <div>
                                                     <label htmlFor="" className="text-base font-medium text-gray">
                                                         {' '}
                                                         Role<span className='text-success px-1'>*</span>
@@ -241,14 +274,29 @@ const AddEmployees = () => {
                                                             type="text"
                                                             name='role'
                                                             value={role}
-                                                            onChange={handleChange}
+                                                            onChange={(e) => setRole(e.target.value)}
                                                         ></input>
                                                     </div>
                                                 </div>
 
 
+                                                <div>
+                                                    <label htmlFor="" className="text-base font-medium text-gray">
+                                                        {' '}
+                                                        Image<span className='text-success px-1'>*</span>
+                                                    </label>
+                                                    <div className="mt-2">
+                                                        <input
+                                                            className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                                            type="file"
+                                                            accept='image/*'
+                                                            onChange={(e)=>setImage(e.target.files[0])}
+                                                        ></input>
+                                                    </div>
+                                                </div>
 
-</div>
+
+                                            </div>
 
 
 

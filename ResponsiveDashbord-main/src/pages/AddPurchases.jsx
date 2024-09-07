@@ -13,6 +13,8 @@ const AddPurchases = () => {
 
     const [searchTerm, setSearchTerm] = useState('');
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+
 
     const options = ['Option 1', 'Option 2', 'Option 3'];
 
@@ -33,6 +35,7 @@ const AddPurchases = () => {
     const handleClick = (option) => {
         setSearchTerm(option);
         setIsDropdownOpen(false);
+        setShowModal(true)
     };
 
 
@@ -364,6 +367,216 @@ const AddPurchases = () => {
                 </div>
 
             </section>
+
+
+
+
+
+            {showModal && (
+                <>
+                    <div
+                        className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+                    >
+                        <div className="mx-auto w-6/7 lg:w-4/6  h-4/5 lg:h-auto px-4 md:px-8 ">
+                            {/*content*/}
+                            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+
+                                {/*body*/}
+                                <section className="overflow-hidden">
+                                    <div className="">
+                                        {/*header*/}
+                                        <div className="flex items-start p-4 w-full justify-between border-b border-solid border-blueGray-200 rounded-l">
+                                            <h3 className="text-2xl mb-2 font-semibold">
+                                                {searchTerm}
+                                            </h3>
+                                            <button
+                                                className=" mb-2 p-1 ml-auto bg-transparent shadow-xl border-0 bg-red-500 rounded-full text-black flex justify-center items-center float-right  leading-none font-semibold outline-none focus:outline-none"
+                                                onClick={() => setShowModal(false)}
+                                            >
+                                                <span className=" text-red-500 m-[0.1px] h-6 w-6 bg-white flex justify-center items-center rounded-full  text-md">
+                                                    X
+                                                </span>
+                                            </button>
+                                        </div>
+
+
+                                        {/* -----------From-------------------- */}
+
+                                        <div className="flex  justify-between  my-1 p-1  ">
+
+                                            <div className="w-full">
+
+                                                <form action="" method="post">
+                                                    <div className="">
+
+                                                        {/* ---------------Start---------------------- */}
+
+                                                        <div className=" p-3 grid md:grid-cols-2 md:gap-5 xl:grid-cols-2  mx-auto ">
+
+                                                            <div>
+                                                                <label htmlFor="" className="text-base font-medium text-gray">
+                                                                    {' '}
+                                                                    Tax<span className='text-success px-1'>*</span>
+                                                                </label>
+
+                                                                <div className="mt-2">
+                                                                    <select className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50">
+                                                                        <option selected className='text-gray-400 '>--</option>
+                                                                        <option value="US">United States</option>
+                                                                        <option value="CA">Canada</option>
+                                                                        <option value="FR">France</option>
+                                                                        <option value="DE">Germany</option>
+                                                                    </select>
+                                                                </div>
+
+                                                            </div>
+
+
+
+                                                            <div>
+                                                                <label htmlFor="" className="text-base font-medium text-gray">
+                                                                    {' '}
+                                                                    Quantity<span className='text-success px-1'>*</span>
+                                                                </label>
+                                                                <div className="mt-2">
+                                                                    <input
+                                                                        className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                                                        type="text"
+                                                                    ></input>
+                                                                </div>
+                                                            </div>
+
+
+
+
+                                                        </div>
+
+                                                        {/* ------------------------------------- */}
+
+                                                        <div className=" p-3 grid md:grid-cols-2 md:gap-5 xl:grid-cols-2  mx-auto ">
+
+
+                                                            <div>
+                                                                <label htmlFor="" className="text-base font-medium text-gray">
+                                                                    {' '}
+                                                                    Discount<span className='text-success px-1'>*</span>
+                                                                </label>
+                                                                <div className="mt-2">
+                                                                    <input
+                                                                        className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                                                        type="text"
+                                                                    ></input>
+                                                                </div>
+                                                            </div>
+
+                                                            <div>
+                                                                <label htmlFor="" className="text-base font-medium text-gray">
+                                                                    {' '}
+                                                                    Unit Cost<span className='text-success px-1'>*</span>
+                                                                </label>
+                                                                <div className="mt-2">
+                                                                    <input
+                                                                        className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                                                        type="text"
+                                                                    ></input>
+                                                                </div>
+                                                            </div>
+
+
+
+                                                        </div>
+
+                                                        {/* ----------------------------------------------------------- */}
+
+                                                        <div className=" p-3 grid md:grid-cols-2 md:gap-5 xl:grid-cols-2  mx-auto ">
+
+
+                                                        <div>
+                                                                <label htmlFor="" className="text-base font-medium text-gray">
+                                                                    {' '}
+                                                                    Color<span className='text-success px-1'>*</span>
+                                                                </label>
+
+                                                                <div className="mt-2">
+                                                                    <select className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50">
+                                                                        <option selected className='text-gray-400 '>--</option>
+                                                                        <option value="US">United States</option>
+                                                                        <option value="CA">Canada</option>
+                                                                        <option value="FR">France</option>
+                                                                        <option value="DE">Germany</option>
+                                                                    </select>
+                                                                </div>
+
+                                                            </div>
+
+
+
+
+                                                        </div>
+
+
+
+
+
+
+
+
+                                                        {/* ------------------------End--------------------------------- */}
+
+
+                                                        {/* ------------Button----------- */}
+                                                        <div className="p-3 grid md:grid-cols-2 md:gap-5 xl:grid-cols-4 md:w-fit w-full space-y-3 md:space-y-0  me-auto">
+
+                                                            <div className="px-3 flex justify-around  gap-2 items-center py-1.5  font-larze text-white bg-success  focus:ring-4 focus:outline-none  rounded-md ">
+                                                                <FaCircleCheck className=' ' />
+                                                                <button type="submit" >
+                                                                    Save
+                                                                </button>
+                                                            </div>
+
+                                                            <div className="px-3 flex justify-around  gap-2 items-center py-1.5  font-larze text-white bg-gray  focus:ring-4 focus:outline-none  rounded-md ">
+                                                                x
+                                                                <button type="reset" >
+                                                                    Clear
+                                                                </button>
+                                                            </div>
+
+
+                                                        </div>
+                                                        {/* -----------Button End--------------- */}
+                                                    </div>
+                                                </form>
+
+                                            </div>
+
+                                        </div>
+
+
+
+                                        {/* -----------From End-------------------- */}
+
+
+
+
+
+                                    </div>
+                                </section>
+                                {/*footer*/}
+
+                            </div>
+                        </div>
+                    </div>
+                    <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+                </>
+            )}
+
+
+
+
+
+
+
+
 
         </>
     )

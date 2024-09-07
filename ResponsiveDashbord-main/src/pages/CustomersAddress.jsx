@@ -1,18 +1,52 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaAngleDown } from "react-icons/fa";
 import { MdFilterListAlt } from "react-icons/md";
 import { FaFileExport } from "react-icons/fa";
 import { CiCirclePlus } from "react-icons/ci";
 import Table from '../components/Table';
 import { IoSearchSharp } from "react-icons/io5";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaCircleCheck } from "react-icons/fa6";
 import { MdOutlinePublishedWithChanges } from "react-icons/md";
+import axios from 'axios';
 
 
 
 const CustomersAddress = () => {
 
+    const navigation = useNavigate()
+    const [showCategory, setShowCategory] = useState([])
+    const [addCustomerAddress, setCustomerAddress] = useState({
+        name: "",
+        email: "",
+        phoneNumber: "",
+        city: "",
+        zipCode: "",
+        streetAddress: "",
+        state: "",
+        country: "",
+    })
+    const { name, email, city, phoneNumber, zipCode, streetAddress, state, country } = addCustomerAddress
+
+    function handleChange(e) {
+        setCustomerAddress({ ...addCustomerAddress, [e.target.name]: e.target.value })
+    }
+
+
+    async function handleSubmit(e) {
+        e.preventDefault()
+        await axios.post('http://localhost:4000/api/customerAddress', addCustomerAddress)
+        navigation("/admin/customers")
+
+    }
+
+    useEffect(() => {
+        getAddressCategory()
+    }, [])
+    async function getAddressCategory() {
+        const result = await axios.get('http://localhost:4000/api/getAllCategory')
+        setShowCategory(result.data)
+    }
 
     const [open, Setopen] = useState(false)
 
@@ -85,7 +119,7 @@ const CustomersAddress = () => {
 
 
                         {/* -----------From-------------------- */}
-                        <form action="" method="post">
+                        <form action="" method="post" onSubmit={handleSubmit}>
                             <div className="flex  justify-between  my-1 p-1  ">
 
                                 <div className="w-full">
@@ -93,6 +127,7 @@ const CustomersAddress = () => {
                                     <div className="">
 
                                         {/* ---------------Start---------------------- */}
+                                        
 
                                         <div className=" p-3 grid md:grid-cols-2 md:gap-5 xl:grid-cols-4  mx-auto ">
 
@@ -105,6 +140,9 @@ const CustomersAddress = () => {
                                                     <input
                                                         className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                         type="text"
+                                                        name='name'
+                                                        value={name}
+                                                        onChange={handleChange}
                                                     ></input>
                                                 </div>
                                             </div>
@@ -119,6 +157,9 @@ const CustomersAddress = () => {
                                                     <input
                                                         className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                         type="text"
+                                                        name='email'
+                                                        value={email}
+                                                        onChange={handleChange}
                                                     ></input>
                                                 </div>
                                             </div>
@@ -134,6 +175,9 @@ const CustomersAddress = () => {
                                                     <input
                                                         className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                         type="number"
+                                                        name='phoneNumber'
+                                                        value={phoneNumber}
+                                                        onChange={handleChange}
                                                     ></input>
                                                 </div>
                                             </div>
@@ -142,22 +186,25 @@ const CustomersAddress = () => {
 
 
 
-                                            <div>
-                                                <label htmlFor="" className="text-base font-medium text-gray">
-                                                    {' '}
-                                                    Country<span className='text-success px-1'>*</span>
-                                                </label>
-                                                <div className="mt-2">
-                                                    <select className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50">
-                                                        <option selected className='text-gray-400 '>--</option>
-                                                        <option value="US">United States</option>
-                                                        <option value="CA">Canada</option>
-                                                        <option value="FR">France</option>
-                                                        <option value="DE">Germany</option>
-                                                    </select>
+                                        <div>
+                                                    <label htmlFor="" className="text-base font-medium text-gray">
+                                                        {' '}
+                                                        Country<span className='text-success px-1'>*</span>
+                                                    </label>
+                                                    <div className="mt-2">
+                                                        <select className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                                        name='country' value={country}
+                                                        onChange={handleChange}
+                                                        >
+                                                            <option value="">---Select Country---</option>
+                                                            {showCategory.map((data, index) => (
+                                                                <option key={index} value={data.country}>
+                                                                    {data.country}
+                                                                </option>
+                                                            ))}                                                        </select>
 
+                                                    </div>
                                                 </div>
-                                            </div>
 
 
 
@@ -167,43 +214,42 @@ const CustomersAddress = () => {
 
                                         <div className=" p-3 grid md:grid-cols-2 md:gap-5 xl:grid-cols-4  mx-auto ">
 
-                                            <div>
-                                                <label htmlFor="" className="text-base font-medium text-gray">
-                                                    {' '}
-                                                    State<span className='text-success px-1'>*</span>
-                                                </label>
-                                                <div className="mt-2">
-                                                    <select className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50">
-                                                        <option selected className='text-gray-400 '>--</option>
-                                                        <option value="US">United States</option>
-                                                        <option value="CA">Canada</option>
-                                                        <option value="FR">France</option>
-                                                        <option value="DE">Germany</option>
-                                                    </select>
-
+                                        <div>
+                                                    <label htmlFor="" className="text-base font-medium text-gray">
+                                                        {' '}
+                                                        State<span className='text-success px-1'>*</span>
+                                                    </label>
+                                                    <div className="mt-2">
+                                                        <input
+                                                            className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                                            type="text"
+                                                            name='state'
+                                                            value={state}
+                                                            onChange={handleChange}
+                                                        ></input>
+                                                    </div>
                                                 </div>
-                                            </div>
 
 
 
 
 
-                                            <div>
-                                                <label htmlFor="" className="text-base font-medium text-gray">
-                                                    {' '}
-                                                    City<span className='text-success px-1'>*</span>
-                                                </label>
-                                                <div className="mt-2">
-                                                    <select className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50">
-                                                        <option selected className='text-gray-400 '>--</option>
-                                                        <option value="US">United States</option>
-                                                        <option value="CA">Canada</option>
-                                                        <option value="FR">France</option>
-                                                        <option value="DE">Germany</option>
-                                                    </select>
+                                                <div>
+                                                    <label htmlFor="" className="text-base font-medium text-gray">
+                                                        {' '}
+                                                        City<span className='text-success px-1'>*</span>
+                                                    </label>
+                                                    <div className="mt-2">
+                                                        <input
+                                                            className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                                            type="text"
+                                                            name='city'
+                                                            value={city}
+                                                            onChange={handleChange}
+                                                        ></input>
 
+                                                    </div>
                                                 </div>
-                                            </div>
 
 
                                             <div>
@@ -215,6 +261,9 @@ const CustomersAddress = () => {
                                                     <input
                                                         className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                         type="text"
+                                                        name='zipCode'
+                                                        value={zipCode}
+                                                        onChange={handleChange}
                                                     ></input>
                                                 </div>
                                             </div>
@@ -228,6 +277,9 @@ const CustomersAddress = () => {
                                                     <input
                                                         className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                         type="text"
+                                                        name='streetAddress'
+                                                        value={streetAddress}
+                                                        onChange={handleChange}
                                                     ></input>
                                                 </div>
                                             </div>
@@ -250,7 +302,7 @@ const CustomersAddress = () => {
 
                                             <div className="px-3 flex justify-around  gap-2 items-center py-1.5  font-larze text-white bg-success  focus:ring-4 focus:outline-none  rounded-md ">
                                                 <FaCircleCheck className=' ' />
-                                                <button type="button" >
+                                                <button type="submit" >
                                                     Save
                                                 </button>
                                             </div>

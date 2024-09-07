@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { FaCircleCheck } from "react-icons/fa6";
 import { IoIosPerson } from "react-icons/io";
@@ -12,24 +12,29 @@ import { FaRegEdit } from "react-icons/fa";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { MdFilterListAlt } from "react-icons/md";
 import { FaAngleDown } from "react-icons/fa";
+import axios from 'axios';
 
 
 
 const CountriesTable = () => {
 
-    const data = [
-        { id: 1, name: "John Doe", code: "AF", status: "Active" },
-        { id: 2, name: "John Doe", code: "AF", status: "Active" },
-        { id: 3, name: "John Doe", code: "AF", status: "Active" },
-        { id: 4, name: "John Doe", code: "AF", status: "Active" },
-        { id: 5, name: "John Doe", code: "AF", status: "Active" },
-        { id: 6, name: "John Doe", code: "AF", status: "Active" },
-        { id: 7, name: "John Doe", code: "AF", status: "Active" },
-        { id: 8, name: "John Doe", code: "AF", status: "Active" },
-        { id: 9, name: "John Doe1", code: "AF", status: "Active" },
-        { id: 10, name: "John Doe", code: "AF", status: "Active" },
-        
-    ];
+    const [data, setData] = useState([])
+    useEffect(() => {
+        getCountry();
+      }, [])
+      async function getCountry() {
+        let result = await axios.get("http://localhost:4000/api/getallcountry");
+        console.log(result.data)
+        setData(result.data);
+      }
+
+      async function deleteCountry(_id) {
+        const result = confirm("Are you sure to delete")
+        if(result === true){
+          await axios.delete(`http://localhost:4000/api/deletecountry/${_id}`)
+          getCountry()
+        }
+      }
 
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 5;
@@ -72,12 +77,12 @@ const CountriesTable = () => {
 
                             {currentData.map((row) => (
                                 <tr key={row.id} className=" border-b dark:bg-gray-800 dark:border-gray-700">
-                                    <td className="py-2 px-4 border-b">{row.name}</td>
+                                    <td className="py-2 px-4 border-b">{row.countryName}</td>
                                     <td className="py-2 px-4 border-b">{row.code}</td>
                                     <td className="py-2 px-4 border-b">{row.status}</td>
                                     <td class="px-6 py-4 flex gap-2 justify-center">
-                                        <Link to="/admin/settings/editCountries"><FaRegEdit className='text-green-400 pointer' size={20} /></Link>
-                                        <span><MdOutlineDeleteOutline className='text-red-400 pointer' size={20} /></span>
+                                        <Link to={`/admin/settings/editCountries/${row._id}`}><FaRegEdit className='text-green-400 pointer' size={20} /></Link>
+                                        <Link onClick={()=>deleteCountry(row._id)}><MdOutlineDeleteOutline className='text-red-400 pointer' size={20}/></Link> 
                                     </td>
                                 </tr>
                             ))}

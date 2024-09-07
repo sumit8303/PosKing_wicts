@@ -1,11 +1,29 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaCircleCheck } from "react-icons/fa6";
+import axios from 'axios';
 
 
 
 const AddCountries = () => {
+    const navigation = useNavigate()
+    const [data, setData] = useState({
+        countryName : "",
+        code: "",
+        status: ""
+        })
 
+        const {countryName, code, status} = data
+
+        function handleChange(e){
+            setData({...data, [e.target.name]:e.target.value})
+        }
+
+       async function handleSubmit(e) {
+        e.preventDefault()
+        await axios.post("http://localhost:4000/api/createCountry", data)
+        navigation("/admin/settings")
+       }
 
 
 
@@ -51,7 +69,7 @@ const AddCountries = () => {
 
 
                             {/* -----------From-------------------- */}
-                            <form action="" method="post">
+                            <form action="" method="post" onSubmit={handleSubmit}>
                                 <div className="flex  justify-between  my-1 p-1  ">
 
                                     <div className="w-full">
@@ -71,6 +89,9 @@ const AddCountries = () => {
                                                         <input
                                                             className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                             type="text"
+                                                            name='countryName'
+                                                            value={countryName}
+                                                            onChange={handleChange}
                                                         ></input>
                                                     </div>
                                                 </div>
@@ -85,6 +106,9 @@ const AddCountries = () => {
                                                         <input
                                                             className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                             type="text"
+                                                            name='code'
+                                                            value={code}
+                                                            onChange={handleChange}
                                                         ></input>
                                                     </div>
                                                 </div>
@@ -98,11 +122,11 @@ const AddCountries = () => {
                                                     </label>
                                                     <div className="mt-2 flex  justify-between items-center ">
                                                         <div class="flex w-full items-center  mb-4">
-                                                            <input id="Active" type="radio" value="Active" name="Status" className='accent-success h-4 w-4 ' />
+                                                            <input id="Active" type="radio" value="Active" name="status" onChange={handleChange} className='accent-success h-4 w-4 ' />
                                                             <label for="Active" class="ms-2 text-base font-medium text-gray">Active</label>
                                                         </div>
                                                         <div class="flex w-full items-center mb-4 ">
-                                                            <input id="Inactive" type="radio" value="Inactive" name="Status" className='accent-success h-4 w-4 ' />
+                                                            <input id="Inactive" type="radio" value="Inactive" name="status" onChange={handleChange} className='accent-success h-4 w-4 ' />
                                                             <label for="Inactive" class="ms-2 text-base font-medium text-gray">Inactive</label>
                                                         </div>
                                                     </div>
@@ -122,7 +146,7 @@ const AddCountries = () => {
 
                                                 <div className="px-3 flex justify-around  gap-2 items-center py-1.5  font-larze text-white bg-success  focus:ring-4 focus:outline-none  rounded-md ">
                                                     <FaCircleCheck className=' ' />
-                                                    <button type="button" >
+                                                    <button type="submit" >
                                                         Save
                                                     </button>
                                                 </div>

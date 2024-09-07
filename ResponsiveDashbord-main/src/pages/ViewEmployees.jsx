@@ -105,7 +105,7 @@ const ViewEmployees = () => {
                     {/* ----------Start View---------*/}
 
                     <div className=" ">
-
+                    {data.map((data) => (
                         <div className=" mt-[1rem] md:mt-0 md:h-40   shadow-md md:p-2 bg-white rounded-md antialiased ">
 
 
@@ -116,7 +116,7 @@ const ViewEmployees = () => {
                                     <div className="p-2  mb-1 md:mb-0 px-2 rounded  text-center  ">
 
                                         {/* <img src={selectImage} alt="" srcset="" className=' md:w-30 md:h-30  object-fit ' /> */}
-                                        <img src={pro} alt="" srcset="" className='shadow-sm md:w-30 md:h-30 rounded  object-fit ' />
+                                        <img src={`http://localhost:4000/${data.image}`} alt="" srcset="" className='shadow-sm md:w-30 md:h-30 rounded  object-fit ' />
 
 
                                     </div>
@@ -126,7 +126,7 @@ const ViewEmployees = () => {
 
                                 <div className="text-center p-2 md:text-justify">
 
-                                    <div className="py-1  fount-bold capitalize text-2xl">John Doe</div>
+                                    <div className="py-1  fount-bold capitalize text-2xl">{data.name}</div>
                                     <div className="py-1  ">
                                         <div className="bg-orange-100 text-sm md:text-md mx-auto md:mx-0 text-black capitalize w-15 text-center rounded text-sm p-1">
                                             Stuff
@@ -177,6 +177,7 @@ const ViewEmployees = () => {
 
                         </div>
 
+))}
                     </div>
 
 

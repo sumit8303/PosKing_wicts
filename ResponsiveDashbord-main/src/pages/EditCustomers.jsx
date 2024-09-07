@@ -1,13 +1,62 @@
 "use client";
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { IoSearchSharp } from "react-icons/io5";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FaCircleCheck } from "react-icons/fa6";
 import { MdOutlinePublishedWithChanges } from "react-icons/md";
+import axios from 'axios';
 
 
 
 const EditCustomers = () => {
+
+    const navigation = useNavigate()
+
+    let { id } = useParams();
+    let [name, setName] = useState('');
+    let [email, setEmail] = useState('');
+    let [phoneNumber, setPhoneNumber] = useState('');
+    let [password, setPassword] = useState('');
+    let [confirmPassword, setConfirmPassword] = useState('');
+    let [status, setStatus] = useState('');
+    let [image, setImage] = useState(null);
+
+
+    useEffect(() => {
+        viewAdministrator()
+    }, [])
+
+    async function viewAdministrator() {
+        let response = await axios.get(`http://localhost:4000/api/viewCustomer/${id}`)
+        setName(response.data[0].name)
+        setEmail(response.data[0].email)
+        setPhoneNumber(response.data[0].phoneNumber)
+        setPassword(response.data[0].password)
+        setConfirmPassword(response.data[0].confirmPassword)
+        setStatus(response.data[0].status)
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const user = new FormData();
+        user.append('image', image);
+        user.append('name', name);
+        user.append('email', email);
+        user.append('phoneNumber', phoneNumber);
+        user.append('password', password);
+        user.append('confirmPassword', confirmPassword);
+        user.append('status', status);
+        try {
+            await axios.put(`http://localhost:4000/api/updateCustomer/${id}`, user, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            navigation("/admin/customers")
+        } catch (error) {
+            alert('Failed to upload customer.');
+        }
+    }
 
 
     const [searchTerm, setSearchTerm] = useState('');
@@ -72,7 +121,7 @@ const EditCustomers = () => {
 
                             {/* -----------From-------------------- */}
 
-                            <form action="" method="post">
+                            <form action="" method="post" onSubmit={handleSubmit}>
                                 <div className="flex  justify-between  my-1 p-1  ">
 
                                     <div className="w-full">
@@ -92,6 +141,9 @@ const EditCustomers = () => {
                                                         <input
                                                             className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                             type="text"
+                                                            name='name'
+                                                            value={name}
+                                                            onChange={(e) => setName(e.target.value)}
                                                         ></input>
                                                     </div>
                                                 </div>
@@ -106,6 +158,9 @@ const EditCustomers = () => {
                                                         <input
                                                             className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                             type="email"
+                                                            name='email'
+                                                            value={email}
+                                                            onChange={(e) => setEmail(e.target.value)}
                                                         ></input>
                                                     </div>
                                                 </div>
@@ -119,6 +174,9 @@ const EditCustomers = () => {
                                                         <input
                                                             className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                             type="number"
+                                                            name='phoneNumber'
+                                                            value={phoneNumber}
+                                                            onChange={(e) => setPhoneNumber(e.target.value)}
                                                         ></input>
                                                     </div>
                                                 </div>
@@ -130,18 +188,18 @@ const EditCustomers = () => {
                                             <div className=" p-3 grid md:grid-cols-2 md:gap-5 xl:grid-cols-3  mx-auto ">
 
 
-                                            <div>
+                                                <div>
                                                     <label htmlFor="" className="text-base font-medium text-gray">
                                                         {' '}
                                                         Status<span className='text-success px-1'>*</span>
                                                     </label>
                                                     <div className="mt-2 flex  justify-between items-center ">
                                                         <div class="flex w-full items-center  mb-4">
-                                                            <input id="Active" type="radio" value="Active" name="Status" className='accent-success h-4 w-4 ' />
+                                                            <input id="Active" type="radio" value="Active" name="status" onChange={(e) => setStatus(e.target.value)} checked ={status === "Active"} className='accent-success h-4 w-4 ' />
                                                             <label for="Active" class="ms-2 text-base font-medium text-gray">Active</label>
                                                         </div>
                                                         <div class="flex w-full items-center mb-4 ">
-                                                            <input id="Inactive" type="radio" value="Inactive" name="Status" className='accent-success h-4 w-4 ' />
+                                                            <input id="Inactive" type="radio" value="Inactive" name="status" onChange={(e) => setStatus(e.target.value)} checked ={status === "Inactive"} className='accent-success h-4 w-4 ' />
                                                             <label for="Inactive" class="ms-2 text-base font-medium text-gray">Inactive</label>
                                                         </div>
                                                     </div>
@@ -158,10 +216,13 @@ const EditCustomers = () => {
                                                         <input
                                                             className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                             type="text"
+                                                            name='password'
+                                                            value={password}
+                                                            onChange={(e) => setPassword(e.target.value)}
                                                         ></input>
                                                     </div>
                                                 </div>
-                                               
+
                                                 <div>
                                                     <label htmlFor="" className="text-base font-medium text-gray">
                                                         {' '}
@@ -171,6 +232,23 @@ const EditCustomers = () => {
                                                         <input
                                                             className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                             type="text"
+                                                            name='confirmPassword'
+                                                            value={confirmPassword}
+                                                            onChange={(e) => setConfirmPassword(e.target.value)}
+                                                        ></input>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label htmlFor="" className="text-base font-medium text-gray">
+                                                        {' '}
+                                                        Image<span className='text-success px-1'>*</span>
+                                                    </label>
+                                                    <div className="mt-2">
+                                                        <input
+                                                            className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                                            type="file"
+                                                            accept='image/*'
+                                                            onChange={(e) => setImage(e.target.files[0])}
                                                         ></input>
                                                     </div>
                                                 </div>

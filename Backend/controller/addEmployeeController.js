@@ -4,7 +4,7 @@ const bcryptjs = require('bcryptjs');
 // ---------------------Add-Employee------------------
 
 exports.newemployess = async (req, res) => {
-    let { name, password, confirmPassword, email, status, role, phoneNumber } = req.body;
+    let { name, password, confirmPassword, email, status, role, phoneNumber, image } = req.body;
 
     try {
         let employeesfind = await employeesmodel.findOne({ email: email });
@@ -25,6 +25,7 @@ exports.newemployess = async (req, res) => {
                 phoneNumber: phoneNumber,
                 role: role,
                 status: status,
+                image: req.file.filename
             });
 
             return res.status(201).json({ success: true, msg: "User created successfully", details });
@@ -39,7 +40,7 @@ exports.newemployess = async (req, res) => {
 
 // --------------------Get-All-Employees----------------------
 
-exports.getAllEmployees  = async (req, res) => {
+exports.getAllEmployees = async (req, res) => {
     let data = await employeesmodel.find({})
     res.json(data)
 }
@@ -48,36 +49,71 @@ exports.getAllEmployees  = async (req, res) => {
 
 
 
-exports.deleteEmployees = async(req,res)=>{
+exports.deleteEmployees = async (req, res) => {
     let _id = req.params._id;
     try {
-        let findEmployees = await employeesmodel.findByIdAndDelete({_id: _id})
-        if(findEmployees){
-            return res.status(200).json({success:true,message:"Employees deleted successfully",findEmployees})
+        let findEmployees = await employeesmodel.findByIdAndDelete({ _id: _id })
+        if (findEmployees) {
+            return res.status(200).json({ success: true, message: "Employees deleted successfully", findEmployees })
         }
     } catch (error) {
-        return res.status(400).json({success:"false",error:error.message})
+        return res.status(400).json({ success: "false", error: error.message })
     }
 }
 
 
 // ------------------Update-Employees--------------------------
 
-exports.updateEmployees=async(req,res)=>{
-    let _id=req.params._id;
-    let {name,email,password,confirmPassword,phoneNumber,address,status}=req.body;
-    try {
-        let findEmployees=await employeesmodel.findByIdAndUpdate({_id:_id})
-        if(findEmployees){
-    let updateEmployee = await employeesmodel.updateOne({_id:_id}, { $set:{email: email,password:password,confirmPassword:confirmPassword,address:address,phoneNumber:phoneNumber,name:name,status:status } })
+// exports.updateEmployees = async (req, res) => {
+//     let _id = req.params._id;
+//     let { name, email, password, confirmPassword, phoneNumber, address, status } = req.body;
+//     try {
+//         let findEmployees = await employeesmodel.findByIdAndUpdate({ _id: _id })
+//         if (findEmployees) {
+//             let updateEmployee = await employeesmodel.updateOne({ _id: _id }, { $set: { email: email, password: password, confirmPassword: confirmPassword, address: address, phoneNumber: phoneNumber, name: name, status: status } })
 
-            return res.status(200).json({success:true,message:"Employees updated successfully",findEmployees})
+//             return res.status(200).json({ success: true, message: "Employees updated successfully", findEmployees })
+//         }
+//     } catch (error) {
+//         return res.status(400).json({ success: "false", error: error.message })
+//     }
+// }
+
+
+exports.updateEmployees = async (req, res)=>{
+    let _id = req.params._id;
+    let { name, email, password, confirmPassword, phoneNumber, status, role } = req.body;
+    try {
+        // Find the employee by ID
+        let findEmployee = await employeesmodel.findById(_id);
+        if (findEmployee) {
+            // Prepare the update object
+            let updateData = { 
+                email, 
+                password, 
+                confirmPassword, 
+                phoneNumber, 
+                name, 
+                status, 
+                role, 
+            };
+
+            // Check if there is an image in the request
+            if (req.file) {
+                updateData.image = req.file.filename;
+            }
+
+            // Update the employee's details
+            let updateCustomer = await employeesmodel.updateOne({ _id }, { $set: updateData });
+
+            return res.json({ success: true, message: "Employee updated successfully", updateCustomer });
+        } else {
+            return res.status(404).json({ success: false, message: "employee not found" });
         }
     } catch (error) {
-        return res.status(400).json({success:"false",error:error.message})
+        return res.status(400).json({ success: false, error: error.message });
     }
 }
-
 
 
 // ------------------------------filter-Employee-------------------------
@@ -103,7 +139,7 @@ exports.filterEmployee = async (req, res) => {
 
 
 
-exports.viewEmployees =  async (req, res) => {
+exports.viewEmployees = async (req, res) => {
     let id = req.params.id
     let data = await employeesmodel.find({ _id: id })
     res.json(data)

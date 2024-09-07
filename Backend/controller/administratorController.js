@@ -7,7 +7,7 @@ let bcryptjs = require('bcryptjs')
 
 
 exports.newadministrator = async (req, res) => {
-    let { name, password, confirmPassword, email, phoneNumber, status } = req.body;
+    let { name, password, confirmPassword, email, phoneNumber, status, image } = req.body;
 
     try {
         // Ensure password and confirmPassword are strings
@@ -37,6 +37,7 @@ exports.newadministrator = async (req, res) => {
             password: hashPassword, // Store the hashed password
             status: status,
             phoneNumber: phoneNumber,
+            image:req.file.filename
         });
 
         return res.status(201).json({ success: true, msg: "User created successfully", details: newUser });
@@ -87,20 +88,41 @@ exports.deleteAdministrator=async(req,res)=>{
 // }
 
 
-exports.updateAdministrator=async(req,res)=>{
-    let _id=req.params._id;
-    let {name,email,password,confirmPassword,phoneNumber,address,status}=req.body;
+exports.updateAdministrator = async (req, res) => {
+    let _id = req.params._id;
+    let { name, email, password, confirmPassword, phoneNumber, status } = req.body;
     try {
-        let findAdministrator=await administratorModel.findByIdAndUpdate({_id:_id})
-        if(findAdministrator){
-    let findAdministrator = await administratorModel.updateOne({_id:_id}, { $set:{email: email,password:password,confirmPassword:confirmPassword,address:address,phoneNumber:phoneNumber,name:name,status:status } })
+        // Find the administrator by ID
+        let findAdministrator = await administratorModel.findById(_id);
+        if (findAdministrator) {
+            // Prepare the update object
+            let updateData = { 
+                email, 
+                password, 
+                confirmPassword, 
+                phoneNumber, 
+                name, 
+                status 
+            };
 
-            return res.status(200).json({success:true,message:"Employees updated successfully",findAdministrator})
+            // Check if there is an image in the request
+            if (req.file) {
+                updateData.image = req.file.filename;
+            }
+
+            // Update the administrator's details
+            let updateCustomer = await administratorModel.updateOne({ _id }, { $set: updateData });
+
+            return res.json({ success: true, message: "Employee updated successfully", updateCustomer });
+        } else {
+            return res.status(404).json({ success: false, message: "Administrator not found" });
         }
     } catch (error) {
-        return res.status(400).json({success:"false",error:error.message})
+        return res.status(400).json({ success: false, error: error.message });
     }
-}
+};
+
+
 
 
 // ------------------------------------------------Administrators-View-------------------------------

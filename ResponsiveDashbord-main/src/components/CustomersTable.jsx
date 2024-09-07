@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { FaRegEdit } from "react-icons/fa";
 import { GrFormView } from "react-icons/gr";
 import { MdOutlineDeleteOutline } from "react-icons/md";
@@ -6,26 +7,23 @@ import { Link } from 'react-router-dom';
 
 
 // Dummy data for products
-const dummyProducts = Array.from({ length: 50 }, (_, index) => ({
-  id: index + 1,
-  name: `Product ${index + 1}`,
-  email: `Product ${index + 1}`,
-  phone: `Product ${index + 1}`,
-  status: `Product ${index + 1}`
-}));
+
 
 const ITEMS_PER_PAGE = 10;
 
 const CustomersTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [data, setData] = useState([])
 
   // Calculate the start and end index for the current page
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-  const currentProducts = dummyProducts.slice(startIndex, endIndex);
+  const endIndex = startIndex + ITEMS_PER_PAGE
+  const currentProducts = data.slice(startIndex, endIndex);
+
 
   // Calculate total pages
-  const totalPages = Math.ceil(dummyProducts.length / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(data.length / ITEMS_PER_PAGE);
+
 
   // Change page handler
   const handlePageChange = (pageNumber) => {
@@ -33,6 +31,24 @@ const CustomersTable = () => {
       setCurrentPage(pageNumber);
     }
   };
+
+  useEffect(() => {
+    getCustomer();
+  }, [])
+  async function getCustomer() {
+    let result = await axios.get("http://localhost:4000/api/getCustomer");
+    console.log(result.data)
+    setData(result.data);
+   
+  }
+
+  async function deleteCustomer(_id) {
+    const result = confirm("Are you sure to delete")
+    if(result === true){
+      await axios.delete(`http://localhost:4000/api/deleteCustomer/${_id}`)
+      getCustomer()
+    }
+  }
 
   return (
 
@@ -49,15 +65,15 @@ const CustomersTable = () => {
           </tr>
         </thead>
         <tbody className=' '>
-          {currentProducts.map((product) => (
-            <tr key={product.id} className='bg-white border-b'>
-              <td className='px-6 py-4'>{product.name}</td>
-              <td className='px-6 py-4'>{product.email}</td>
-              <td className='px-6 py-4'>{product.phone}</td>
-              <td className='px-6 py-4'>{product.status}</td>
-              <td className='inline-flex px-6 gap-2 py-4'><Link to="/admin/customers/viewcustomers" className='text-lightsuccess pointer'><GrFormView size={20}/></Link>
-               <Link to="/admin/customers/editCustomers"><FaRegEdit className='text-green-400 pointer' size={20}/></Link> 
-               <Link to=""><MdOutlineDeleteOutline className='text-red-400 pointer' size={20}/></Link> 
+          {currentProducts.map((data) => (
+            <tr className='bg-white border-b'>
+              <td className='px-6 py-4'>{data.name}</td>
+              <td className='px-6 py-4'>{data.email}</td>
+              <td className='px-6 py-4'>{data.phoneNumber}</td>
+              <td className='px-6 py-4'>{data.status}</td>
+              <td className='inline-flex px-6 gap-2 py-4'><Link to={`/admin/customers/viewcustomers/${data._id}`}className='text-lightsuccess pointer'><GrFormView size={20}/></Link>
+               <Link to={`/admin/customers/editCustomers/${data._id}`}><FaRegEdit className='text-green-400 pointer' size={20}/></Link> 
+               <Link onClick={()=>deleteCustomer(data._id)}><MdOutlineDeleteOutline className='text-red-400 pointer' size={20}/></Link> 
                </td>
             </tr>
           ))}
@@ -69,7 +85,7 @@ const CustomersTable = () => {
 
 <div className="flex w-full p-3 justify-between ">
 <div className='text-white'>
-{`Showing ${startIndex+1} to ${endIndex} of ${dummyProducts.length} entries`}
+{`Showing ${startIndex+1} to ${endIndex} of ${data.length} entries`}
 </div>
 
       <div className="pagination flex items-center justify-center ">

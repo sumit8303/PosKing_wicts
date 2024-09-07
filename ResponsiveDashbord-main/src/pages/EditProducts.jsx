@@ -84,7 +84,6 @@ const EditProducts = () => {
         user.append('tags', tags);
         user.append('unit', unit);
         user.append('description', description);
-
         try {
             await axios.put(`http://localhost:4000/api/updateProduct/${id}`, user, {
                 headers: {
@@ -98,6 +97,7 @@ const EditProducts = () => {
         }
     }
 
+    
     useEffect(() => {
         getCategory()
     }, [])

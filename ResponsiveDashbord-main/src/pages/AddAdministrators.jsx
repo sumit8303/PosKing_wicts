@@ -12,26 +12,45 @@ import axios from 'axios';
 const AddAdministrators = () => {
     const navigation = useNavigate()
 
-    const [data, setData] = useState({
-        name : "",
-        email: "",
-        phoneNumber: "",
-        status: "",
-        password: "",
-        confirmPassword: "",
-    })
-
-    const {name, email, password, confirmPassword, phoneNumber, status} = data
-
-    function handleChange(e){
-        setData({...data, [e.target.name]:e.target.value})
+    let [name, setName] = useState('');
+    let [email, setEmail] = useState('');
+    let [password, setPassword] = useState('');
+    let [confirmPassword, setConfirmPassword] = useState('');
+    let [phoneNumber, setPhoneNumber] = useState('');
+    let [status, setStatus] = useState('');
+    let [image, setImage] = useState(null)
+ 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const user = new FormData();
+        user.append('image', image);
+        user.append('name', name);
+        user.append('email', email);
+        user.append('password', password);
+        user.append('confirmPassword', confirmPassword);
+        user.append('phoneNumber', phoneNumber);
+        user.append('status', status);
+        
+        
+        try {
+            await axios.post('http://localhost:4000/api/addAdministrator', user, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+           
+            navigation("/admin/administrators")
+        } catch (error) {
+            alert('Failed to upload administrator.');
+        }
     }
+  
 
-   async function handleSubmit(e) {
-    e.preventDefault()
-    await axios.post("http://localhost:4000/api/addAdministrator", data)
-    navigation("/admin/administrators")
-   }
+//    async function handleSubmit(e) {
+//     e.preventDefault()
+//     await axios.post("http://localhost:4000/api/addAdministrator", data)
+//     navigation("/admin/administrators")
+//    }
 
 
     const [searchTerm, setSearchTerm] = useState('');
@@ -119,7 +138,7 @@ const AddAdministrators = () => {
                                                             type="text"
                                                             name='name'
                                                             value={name}
-                                                            onChange={handleChange}
+                                                            onChange={(e)=>setName(e.target.value)}
                                                         ></input>
                                                     </div>
                                                 </div>
@@ -136,7 +155,7 @@ const AddAdministrators = () => {
                                                             type="email"
                                                             name='email'
                                                             value={email}
-                                                            onChange={handleChange}
+                                                            onChange={(e)=>setEmail(e.target.value)}
                                                         ></input>
                                                     </div>
                                                 </div>
@@ -152,7 +171,7 @@ const AddAdministrators = () => {
                                                             type="number"
                                                             name='phoneNumber'
                                                             value={phoneNumber}
-                                                            onChange={handleChange}
+                                                            onChange={(e)=>setPhoneNumber(e.target.value)}
                                                         ></input>
                                                     </div>
                                                 </div>
@@ -171,11 +190,11 @@ const AddAdministrators = () => {
                                                     </label>
                                                     <div className="mt-2 flex  justify-between items-center ">
                                                         <div class="flex w-full items-center  mb-4">
-                                                            <input id="Active" type="radio" value="Active" name="status" onChange={handleChange} className='accent-success h-4 w-4 ' />
+                                                            <input id="Active" type="radio" value="Active" name="status" onChange={(e)=>setStatus(e.target.value)} className='accent-success h-4 w-4 ' />
                                                             <label for="Active" class="ms-2 text-base font-medium text-gray">Active</label>
                                                         </div>
                                                         <div class="flex w-full items-center mb-4 ">
-                                                            <input id="Inactive" type="radio" value="Inactive" name="status" onChange={handleChange} className='accent-success h-4 w-4 ' />
+                                                            <input id="Inactive" type="radio" value="Inactive" name="status" onChange={(e)=>setStatus(e.target.value)}  className='accent-success h-4 w-4 ' />
                                                             <label for="Inactive" class="ms-2 text-base font-medium text-gray">Inactive</label>
                                                         </div>
                                                     </div>
@@ -194,7 +213,7 @@ const AddAdministrators = () => {
                                                             type="text"
                                                             name='password'
                                                             value={password}
-                                                            onChange={handleChange}
+                                                            onChange={(e)=>setPassword(e.target.value)}
                                                         ></input>
                                                     </div>
                                                 </div>
@@ -210,12 +229,31 @@ const AddAdministrators = () => {
                                                             type="text"
                                                             name='confirmPassword'
                                                             value={confirmPassword}
-                                                            onChange={handleChange}
+                                                            onChange={(e)=>setConfirmPassword(e.target.value)}
                                                         ></input>
                                                     </div>
                                                 </div>
 
 
+                                            </div>
+
+                                            <div className=" p-3 grid md:grid-cols-2 md:gap-5 xl:grid-cols-3  mx-auto ">
+
+                                                <div>
+                                                    <label htmlFor="" className="text-base font-medium text-gray">
+                                                        {' '}
+                                                        Image<span className='text-success px-1'>*</span>
+                                                    </label>
+                                                    <div className="mt-2">
+                                                        <input
+                                                            className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                                            type="file"
+                                                            accept='image/*'
+                                                            onChange={(e)=>setImage(e.target.files[0])}
+                                                        ></input>
+                                                    </div>
+                                                </div>
+                                               
                                             </div>
 
 

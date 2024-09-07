@@ -20,6 +20,7 @@ let administrator = new mongoose.Schema({
     //     // enum: ['active', 'inactive'],
     // },
     confirmPassword: String,
+    image: String
 
 });
 

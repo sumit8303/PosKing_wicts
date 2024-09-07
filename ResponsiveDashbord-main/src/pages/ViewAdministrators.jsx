@@ -99,6 +99,7 @@ const ViewAdministrators = () => {
                     {/* ----------Start View---------*/}
 
                     <div className=" ">
+                    {data.map((data) => (
 
                         <div className=" mt-[1rem] md:mt-0 md:h-40   shadow-md md:p-2 bg-white rounded-md antialiased ">
 
@@ -110,17 +111,16 @@ const ViewAdministrators = () => {
                                     <div className="p-2  mb-1 md:mb-0 px-2 rounded  text-center  ">
 
                                         {/* <img src={selectImage} alt="" srcset="" className=' md:w-30 md:h-30  object-fit ' /> */}
-                                        <img src={pro} alt="" srcset="" className='shadow-sm md:w-30 md:h-30 rounded  object-fit ' />
+                                        <img src={`http://localhost:4000/${data.image}`} alt="" srcset="" className='shadow-sm md:w-30 md:h-30 rounded  object-fit ' />
 
 
                                     </div>
-
                                 </div>
 
 
                                 <div className="text-center p-2 md:text-justify">
 
-                                    <div className="py-1  fount-bold capitalize text-2xl">John Doe</div>
+                                    <div className="py-1  fount-bold capitalize text-2xl">{data.name}</div>
                                     <div className="py-1  ">
                                         <div className="bg-orange-100 text-sm md:text-md mx-auto md:mx-0 text-black capitalize w-15 text-center rounded text-sm p-1">
                                             Admin
@@ -171,6 +171,7 @@ const ViewAdministrators = () => {
 
                         </div>
 
+))}
                     </div>
 
 
@@ -214,6 +215,7 @@ const ViewAdministrators = () => {
                             {activeTab === 'tab1' && (
                                 <div>
                                     {data.map((data) => (
+
                                         <div className="  ">
                                             <div className=" text-xl font-semibold px-5 py-3 w-full">Basic Information</div><hr />
 
@@ -394,7 +396,7 @@ const ViewAdministrators = () => {
                                                                     </td>
                                                                     <td class="px-6 py-4 flex gap-2 justify-center">
                                                                         <Link to={`/admin/administrators/viewadministrators/editAddress/${administratorAddress._id}`}><FaRegEdit className='text-green-400 pointer' size={20} /></Link>
-                                                                        
+
                                                                         <Link onClick={() => deleteAdministratorAddress(administratorAddress._id)}><MdOutlineDeleteOutline className='text-red-400 pointer' size={20} /></Link>
                                                                     </td>
                                                                 </tr>

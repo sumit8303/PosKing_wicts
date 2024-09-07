@@ -271,10 +271,10 @@ const router = createBrowserRouter(
         <Route path='/admin/administrators/viewadministrators/addCategory' element={<AddressCategory/>} />
         <Route path='/admin/customers' element={<Customers/>} />
         <Route path='/admin/customers/addcustomers' element={<AddCustomers/>} />
-        <Route path='/admin/customers/viewcustomers' element={<ViewCustomers/>} />
-        <Route path='/admin/customers/editCustomers' element={<EditCustomers/>} />
+        <Route path='/admin/customers/viewcustomers/:id' element={<ViewCustomers/>} />
+        <Route path='/admin/customers/editCustomers/:id' element={<EditCustomers/>} />
         <Route path='/admin/customers/viewcustomers/customersaddress' element={<CustomersAddress/>} />
-        <Route path='/admin/customers/viewcustomers/editsaddress' element={<EditCustAddress/>} />
+        <Route path='/admin/customers/viewcustomers/editsaddress/:id' element={<EditCustAddress/>} />
         <Route path='/admin/customers/viewcustomers/addcategory' element={<CustomersCategory/>} />
         <Route path='/admin/employees' element={<Employees/>} />
         <Route path='/admin/employees/addemployees' element={<AddEmployees/>} />
@@ -287,9 +287,9 @@ const router = createBrowserRouter(
         <Route path='/admin/productsReport' element={<ProductsReport/>} />
         <Route path='/admin/settings' element={<Settings/>} />
         <Route path='/admin/settings/addCountries' element={<AddCountries/>} />
-        <Route path='/admin/settings/editCountries' element={<EditCountries/>} />
+        <Route path='/admin/settings/editCountries/:id' element={<EditCountries/>} />
         <Route path='/admin/settings/addStates' element={<AddStates/>} />
-        <Route path='/admin/settings/editStates' element={<EditStates/>} />
+        <Route path='/admin/settings/editStates/:id' element={<EditStates/>} />
         <Route path='/admin/settings/addCities' element={<AddCities/>} />
         <Route path='/admin/settings/editCities' element={<EditCities/>} />
         <Route path='/admin/settings/addCurrencies' element={<AddCurrencies/>} />

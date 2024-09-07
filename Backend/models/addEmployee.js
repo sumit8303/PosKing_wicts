@@ -7,6 +7,7 @@ const employeesSchema = new mongoose.Schema({
     confirmPassword: String,
     phoneNumber: Number,
     status:String,
-    role: String
+    role: String,
+    image: String
 })
 module.exports = mongoose.model("Employees", employeesSchema)

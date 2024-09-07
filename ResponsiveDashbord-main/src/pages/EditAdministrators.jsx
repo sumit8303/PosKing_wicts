@@ -9,7 +9,56 @@ import axios from 'axios';
 
 
 const EditAdministrators = () => {
-    // const navigation = useNavigate()
+
+    const navigation = useNavigate()
+
+    let { id } = useParams();
+    let [name, setName] = useState('');
+    let [email, setEmail] = useState('');
+    let [phoneNumber, setPhoneNumber] = useState('');
+    let [password, setPassword] = useState('');
+    let [confirmPassword, setConfirmPassword] = useState('');
+    let [status, setStatus] = useState('');
+    let [image, setImage] = useState(null);
+
+
+    useEffect(() => {
+        viewAdministrator()
+    }, [])
+
+    async function viewAdministrator() {
+        let response = await axios.get(`http://localhost:4000/api/viewAdministrator/${id}`)
+        setName(response.data[0].name)
+        setEmail(response.data[0].email)
+        setPhoneNumber(response.data[0].phoneNumber)
+        setPassword(response.data[0].password)
+        setConfirmPassword(response.data[0].confirmPassword)
+        setStatus(response.data[0].status)
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const user = new FormData();
+        user.append('image', image);
+        user.append('name', name);
+        user.append('email', email);
+        user.append('phoneNumber', phoneNumber);
+        user.append('password', password);
+        user.append('confirmPassword', confirmPassword);
+        user.append('status', status);
+        try {
+            await axios.put(`http://localhost:4000/api/updateAdministrator/${id}`, user, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            navigation("/admin/administrators")
+        } catch (error) {
+            alert('Failed to upload administrator.');
+        }
+    }
+
+
     // const [administrator, SetAdministrator] = useState({
     //     name :"",
     //     email :"",
@@ -17,10 +66,10 @@ const EditAdministrators = () => {
     //     status :"",
     //     password :"",
     //     confirmPassword :"",
-      
+    //     role :"",
     // })
 
-    // const {name, email, phoneNumber, status, password, confirmPassword} = administrator
+    // const {name, email, phoneNumber, status, password, confirmPassword, role} = administrator
 
     // function handleChange(e){
     //     SetAdministrator({...administrator, [e.target.name]: e.target.value})
@@ -39,37 +88,6 @@ const EditAdministrators = () => {
     //     await axios.put(`http://localhost:4000/api/updateAdministrator/${id}`, administrator) 
     //     navigation('/admin/administrators')
     //    }
-
-    const navigation = useNavigate()
-    const [administrator, SetAdministrator] = useState({
-        name :"",
-        email :"",
-        phoneNumber :"",
-        status :"",
-        password :"",
-        confirmPassword :"",
-        role :"",
-    })
-
-    const {name, email, phoneNumber, status, password, confirmPassword, role} = administrator
-
-    function handleChange(e){
-        SetAdministrator({...administrator, [e.target.name]: e.target.value})
-    }
-    let {id} = useParams()
-    useEffect(()=>{
-        viewAdministrator()
-    },[])
-    async function viewAdministrator() {
-        let result = await axios.get(`http://localhost:4000/api/viewAdministrator/${id}`)
-        SetAdministrator(result.data[0]) 
-    }
-
-    async function handleSubmit(e){
-        e.preventDefault()
-        await axios.put(`http://localhost:4000/api/updateAdministrator/${id}`, administrator) 
-        navigation('/admin/administrators')
-       }
 
     const [searchTerm, setSearchTerm] = useState('');
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -157,7 +175,7 @@ const EditAdministrators = () => {
                                                             type="text"
                                                             name='name'
                                                             value={name}
-                                                            onChange={handleChange}
+                                                            onChange={(e) => setName(e.target.value)}
                                                         ></input>
                                                     </div>
                                                 </div>
@@ -174,7 +192,7 @@ const EditAdministrators = () => {
                                                             type="email"
                                                             name='email'
                                                             value={email}
-                                                            onChange={handleChange}
+                                                            onChange={(e) => setEmail(e.target.value)}
                                                         ></input>
                                                     </div>
                                                 </div>
@@ -190,7 +208,7 @@ const EditAdministrators = () => {
                                                             type="number"
                                                             name='phoneNumber'
                                                             value={phoneNumber}
-                                                            onChange={handleChange}
+                                                            onChange={(e) => setPhoneNumber(e.target.value)}
                                                         ></input>
                                                     </div>
                                                 </div>
@@ -202,18 +220,18 @@ const EditAdministrators = () => {
                                             <div className=" p-3 grid md:grid-cols-2 md:gap-5 xl:grid-cols-3  mx-auto ">
 
 
-                                            <div>
+                                                <div>
                                                     <label htmlFor="" className="text-base font-medium text-gray">
                                                         {' '}
                                                         Status<span className='text-success px-1'>*</span>
                                                     </label>
                                                     <div className="mt-2 flex  justify-between items-center ">
                                                         <div class="flex w-full items-center  mb-4">
-                                                            <input id="Active" type="radio" value="Active" name="status" onChange={handleChange} checked = {status ==="Active"} className='accent-success h-4 w-4 ' />
+                                                            <input id="Active" type="radio" value="Active" name="status" onChange={(e) => setStatus(e.target.value)} checked={status === "Active"} className='accent-success h-4 w-4 ' />
                                                             <label for="Active" class="ms-2 text-base font-medium text-gray">Active</label>
                                                         </div>
                                                         <div class="flex w-full items-center mb-4 ">
-                                                            <input id="Inactive" type="radio" value="Inactive" name="status" onChange={handleChange} checked = {status==="Inactive"} valclassName='accent-success h-4 w-4 ' />
+                                                            <input id="Inactive" type="radio" value="Inactive" name="status" onChange={(e) => setStatus(e.target.value)} checked={status === "Inactive"} valclassName='accent-success h-4 w-4 ' />
                                                             <label for="Inactive" class="ms-2 text-base font-medium text-gray">Inactive</label>
                                                         </div>
                                                     </div>
@@ -232,11 +250,11 @@ const EditAdministrators = () => {
                                                             type="text"
                                                             name='password'
                                                             value={password}
-                                                            onChange={handleChange}
+                                                            onChange={(e) => setPassword(e.target.value)}
                                                         ></input>
                                                     </div>
                                                 </div>
-                                               
+
                                                 <div>
                                                     <label htmlFor="" className="text-base font-medium text-gray">
                                                         {' '}
@@ -248,12 +266,32 @@ const EditAdministrators = () => {
                                                             type="text"
                                                             name='confirmPassword'
                                                             value={confirmPassword}
-                                                            onChange={handleChange}
+                                                            onChange={(e) => setConfirmPassword(e.target.value)}
                                                         ></input>
                                                     </div>
+
                                                 </div>
 
 
+
+
+                                            </div>
+                                            <div className=" p-3 grid md:grid-cols-2 md:gap-5 xl:grid-cols-3  mx-auto ">
+
+                                                <div>
+                                                    <label htmlFor="" className="text-base font-medium text-gray">
+                                                        {' '}
+                                                        Image<span className='text-success px-1'>*</span>
+                                                    </label>
+                                                    <div className="mt-2">
+                                                        <input
+                                                            className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                                            type="file"
+                                                            accept='image/*'
+                                                            onChange={(e) => setImage(e.target.files[0])}
+                                                        ></input>
+                                                    </div>
+                                                </div>
                                             </div>
 
 

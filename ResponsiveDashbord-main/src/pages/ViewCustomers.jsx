@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BsCardText } from "react-icons/bs";
 import { FaRegEdit } from "react-icons/fa";
 import { GrFormView } from "react-icons/gr";
@@ -10,15 +10,46 @@ import { IoIosPerson } from "react-icons/io";
 import { GrSecure } from "react-icons/gr";
 import { IoLocationSharp } from "react-icons/io5";
 import { IoBag } from "react-icons/io5";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { CiCirclePlus } from "react-icons/ci";
 import { TiImage } from "react-icons/ti";
 import { GrPowerReset } from "react-icons/gr";
+import axios from 'axios';
 
 
 
 const ViewCustomers = () => {
 
+    const { id } = useParams()
+    const [data, setData] = useState([])
+    const [customersAddress, setCustomersAddress] = useState([])
+
+    const navigation = useNavigate()
+    useEffect(() => {
+        viewCustomer()
+    }, [])
+    async function viewCustomer() {
+        let result = await axios.get(`http://localhost:4000/api/viewCustomer/${id}`)
+        setData(result.data)
+        console.log(result.data)
+    }
+
+    const [customer, setCustomer] = useState({
+        password: "",
+        confirmPassword: "",
+    })
+
+    const { password, confirmPassword } = customer
+
+    function handleChange(e) {
+        setCustomer({ ...customer, [e.target.name]: e.target.value })
+    }
+
+    async function handleSubmit(e) {
+        e.preventDefault()
+        await axios.put(`http://localhost:4000/api/updateCustomer/${id}`, customer)
+        navigation('/admin/customers')
+    }
     const [selectImage, setSelectImage] = useState()
 
 
@@ -27,6 +58,27 @@ const ViewCustomers = () => {
     const handleTabChange = (tab) => {
         setActiveTab(tab);
     };
+
+
+    useEffect(() => {
+        getCustomerAddress()
+    }, [])
+
+    async function getCustomerAddress() {
+        let result = await axios.get("http://localhost:4000/api/getCustomerAddress")
+        setCustomersAddress(result.data)
+        console.log(result.data)
+    }
+
+
+    async function deleteCustomerAddress(_id) {
+        const result = confirm("Are you sure to delete")
+        if (result === true) {
+            await axios.delete(`http://localhost:4000/api/deleteCustomerAddress/${_id}`)
+            getCustomerAddress()
+        }
+    }
+
 
 
     return (
@@ -46,49 +98,49 @@ const ViewCustomers = () => {
                     {/* ----------Start View---------*/}
 
                     <div className=" ">
+                        {data.map((data) => (
 
-                        <div className=" mt-[1rem] md:mt-0 md:h-40   shadow-md md:p-2 bg-white rounded-md antialiased ">
-
-
-                            <div className="md:flex relative w-full gap-3  md:float-left items-center ">
-
-                                <div className="">
-
-                                    <div className="p-2  mb-1 md:mb-0 px-2 rounded  text-center  ">
-
-                                        {/* <img src={selectImage} alt="" srcset="" className=' md:w-30 md:h-30  object-fit ' /> */}
-                                        <img src={pro} alt="" srcset="" className='shadow-sm md:w-30 md:h-30 rounded  object-fit ' />
+                            <div className=" mt-[1rem] md:mt-0 md:h-40   shadow-md md:p-2 bg-white rounded-md antialiased ">
 
 
-                                    </div>
+                                <div className="md:flex relative w-full gap-3  md:float-left items-center ">
 
-                                </div>
+                                    <div className="">
+
+                                        <div className="p-2  mb-1 md:mb-0 px-2 rounded  text-center  ">
+
+                                            {/* <img src={selectImage} alt="" srcset="" className=' md:w-30 md:h-30  object-fit ' /> */}
+                                            <img src={`http://localhost:4000/${data.image}`} alt="" srcset="" className='shadow-sm md:w-30 md:h-30 rounded  object-fit ' />
 
 
-                                <div className="text-center p-2 md:text-justify">
-
-                                    <div className="py-1  fount-bold capitalize text-2xl">John Doe</div>
-                                    <div className="py-1  ">
-                                        <div className="bg-orange-100 w-fit text-sm md:text-md mx-auto md:mx-0 text-black capitalize w-15 text-center rounded text-sm p-1">
-                                        Customer
                                         </div>
                                     </div>
-                                    <div className="my-2 px-6 flex mb-1 md:mb-0 justify-around w-full  gap-2 items-center py-1.5  font-larze text-white bg-success  focus:ring-4 focus:outline-none  rounded-md">
-                                        <TiImage  className=' ' />
-                                        {/* <input type="file" placeholder='Save' accept='image/*' onChange={(e)=>{
+
+
+                                    <div className="text-center p-2 md:text-justify">
+
+                                        <div className="py-1  fount-bold capitalize text-2xl">{data.name}</div>
+                                        <div className="py-1  ">
+                                            <div className="bg-orange-100 text-sm md:text-md mx-auto md:mx-0 text-black capitalize w-15 text-center rounded text-sm p-1">
+                                                Admin
+                                            </div>
+                                        </div>
+                                        {/* <div className="my-2 px-6 flex mb-1 md:mb-0 justify-around w-full  gap-2 items-center py-1.5  font-larze text-white bg-success  focus:ring-4 focus:outline-none  rounded-md">
+                                        <TiImage className=' ' />
+                                        <input type="file" placeholder='Save' accept='image/*' onChange={(e)=>{
     const file = e.target.files?.[0];
     setSelectImage( file ? URL.createObjectURL(file): undefined);
-}}  className=' display-none '/>  */}
+}}  className=' display-none '/> 
                                         <button type="submit">
                                             Upload New Photo
                                         </button>
 
+                                    </div> */}
+
                                     </div>
 
-                                </div>
 
-
-                                <div className="p-2">
+                                    {/* <div className="p-2">
 
                                     <div className="md:mt-22 px-6 mb-1 md:mb-0 flex justify-around w-full  gap-2 items-center py-1.5 md:w-30 font-larze text-white bg-green-500  focus:ring-4 focus:outline-none  rounded-md ">
                                         <FaCircleCheck className=' ' />
@@ -96,10 +148,10 @@ const ViewCustomers = () => {
                                             Save
                                         </button>
                                     </div>
-                                </div>
+                                </div> */}
 
 
-                                <div className="p-2">
+                                    {/* <div className="p-2">
 
                                     <div className="md:mt-22 px-6 flex mb-1 md:mb-0 justify-around w-full  gap-2 items-center py-1.5 border border-red-500 md:w-30 font-larze text-red-500 bg-white  focus:ring-4 focus:outline-none  rounded-md ">
                                         <GrPowerReset className=' ' />
@@ -108,16 +160,17 @@ const ViewCustomers = () => {
                                         </button>
                                     </div>
 
+                                </div> */}
+
+
+
                                 </div>
 
 
 
                             </div>
 
-
-
-                        </div>
-
+                        ))}
                     </div>
 
 
@@ -160,27 +213,29 @@ const ViewCustomers = () => {
                         <div className="mt-[1rem]  md:mt-[2rem]  shadow-md md:p-2 bg-white rounded-md antialiased  ">
                             {activeTab === 'tab1' && (
                                 <div>
-                                    <div className="  ">
-                                        <div className=" text-xl font-semibold px-5 py-3 w-full">Basic Information</div><hr />
+                                    {data.map((data) => (
+                                        <div className="  ">
+                                            <div className=" text-xl font-semibold px-5 py-3 w-full">Basic Information</div><hr />
 
-                                        <div className="grid md:grid-cols-2  py-3 px-5 gap-3 ">
-                                            <div className="md:flex justify-between">
-                                                <div className="">Email</div>
-                                                <div className="text-gray">admin@example.com</div>
-                                            </div>
-                                            <div className="md:flex justify-between">
-                                                <div className="">Phone</div>
-                                                <div className="text-gray">+8801254875855</div>
-                                            </div>
-                                            <div className="md:flex justify-between">
-                                                <div className="">Status</div>
-                                                <div className="bg-green-100 text-sm md:text-md mx-auto md:mx-0 text-black capitalize w-15 text-center rounded text-sm p-1">
-                                                    Active
+                                            <div className="grid md:grid-cols-2  py-3 px-5 gap-3 ">
+                                                <div className="md:flex justify-between">
+                                                    <div className="">Email</div>
+                                                    <div className="text-gray">{data.email}</div>
+                                                </div>
+                                                <div className="md:flex justify-between">
+                                                    <div className="">Phone</div>
+                                                    <div className="text-gray">{data.phoneNumber}</div>
+                                                </div>
+                                                <div className="md:flex justify-between">
+                                                    <div className="">Status</div>
+                                                    <div className="bg-green-100 text-sm md:text-md mx-auto md:mx-0 text-black capitalize w-15 text-center rounded text-sm p-1">
+                                                        {data.status}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                    </div>
+                                        </div>
+                                    ))}
                                 </div>
                             )}
                             {activeTab === 'tab2' && (
@@ -189,7 +244,7 @@ const ViewCustomers = () => {
                                         <div className=" text-xl font-semibold px-5 py-3 w-full">Change Password
                                         </div><hr />
 
-                                        <form action="" method="post">
+                                        <form action="" method="post" onSubmit={handleSubmit}>
                                             <div className=" p-3 grid md:grid-cols-2 md:gap-5 xl:grid-cols-2  mx-auto ">
 
                                                 <div>
@@ -201,6 +256,9 @@ const ViewCustomers = () => {
                                                         <input
                                                             className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                             type="text"
+                                                            name='password'
+                                                            value={password}
+                                                            onChange={handleChange}
                                                         ></input>
                                                     </div>
                                                 </div>
@@ -214,6 +272,9 @@ const ViewCustomers = () => {
                                                         <input
                                                             className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                             type="text"
+                                                            name='confirmPassword'
+                                                            value={confirmPassword}
+                                                            onChange={handleChange}
                                                         ></input>
                                                     </div>
                                                 </div>
@@ -223,7 +284,7 @@ const ViewCustomers = () => {
 
                                                 <div className="px-3 flex justify-around w-full gap-2 items-center py-1.5  font-larze text-white bg-success  focus:ring-4 focus:outline-none  rounded-md ">
                                                     <FaCircleCheck className=' ' />
-                                                    <button type="button" >
+                                                    <button type="submit" >
                                                         Save
                                                     </button>
                                                 </div>
@@ -253,7 +314,7 @@ const ViewCustomers = () => {
                                                     </Link>
 
                                                     <Link to="/admin/customers/viewcustomers/addcategory" className="px-3  flex justify-around md:w-fit w-full gap-2 ms-auto items-center py-1.5  font-larze text-white bg-success  focus:ring-4 focus:outline-none  rounded-md ">
-                                                    <CiCirclePlus className='size-5 ' />
+                                                        <CiCirclePlus className='size-5 ' />
                                                         <button type="submit" >
                                                             Add Category
                                                         </button>
@@ -262,86 +323,88 @@ const ViewCustomers = () => {
                                                 </div>
 
                                             </div>
-                                            
-<hr />
+
+                                            <hr />
 
 
-{/* ----------------------Table------------------------------- */}
+                                            {/* ----------------------Table------------------------------- */}
 
-<div className="  text-base font-medium text-darkgray grid md:grid-cols-1 md:gap-2 xl:grid-cols-1 w-full rounded-md  mx-auto ">
+                                            <div className="  text-base font-medium text-darkgray grid md:grid-cols-1 md:gap-2 xl:grid-cols-1 w-full rounded-md  mx-auto ">
 
-<div class="relative overflow-x-auto ">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-                <th scope="col" class="px-4 py-3">
-                Name
-                </th>
-                <th scope="col" class="px-4 py-3">
-                Email	
-                </th>
-                <th scope="col" class="px-4 py-3">
-                Phone
-                </th>
-                <th scope="col" class="px-4 py-3">
-                Address
-                </th>
-                <th scope="col" class="px-4 py-3">
-                Country
-                </th>
-                <th scope="col" class="px-4 py-3">
-                State
-                </th>
-                <th scope="col" class="px-4 py-3">
-                City
-                </th>
-                <th scope="col" class="px-4 py-3">
-                Zip Code
-                </th>
-                <th scope="col" class="px-4 py-3 text-center">
-                Action
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <td class="px-4 py-4">
-                John Doe	
-                </td>
-                <td class="px-4 py-4">
-                admin@example.com	
-                </td>
-                <td class="px-4 py-4">
-                +880 1254875855	
-                </td>
-                <td class="px-4 py-4">
-                House :31, Road: 9, Block: A, Mirpur 1	
-                </td>
-                <td class="px-4 py-4">
-                Bangladesh	
-                </td>
-                <td class="px-4 py-4">
-                Dhaka District	
-                </td>
-                <td class="px-4 py-4">
-                Dhaka	
-                </td>
-                <td class="px-4 py-4">
-                1216
-                </td>
-                <td class="px-6 py-4 flex gap-2 justify-center">
-                    <Link to="/admin/customers/viewcustomers/editsaddress"><FaRegEdit className='text-green-400 pointer' size={20} /></Link>
-                    <span><MdOutlineDeleteOutline className='text-red-400 pointer' size={20} /></span>
-                </td>
-            </tr>
+                                                <div class="relative overflow-x-auto ">
+                                                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                                            <tr>
+                                                                <th scope="col" class="px-4 py-3">
+                                                                    Name
+                                                                </th>
+                                                                <th scope="col" class="px-4 py-3">
+                                                                    Email
+                                                                </th>
+                                                                <th scope="col" class="px-4 py-3">
+                                                                    Phone
+                                                                </th>
+                                                                <th scope="col" class="px-4 py-3">
+                                                                    Address
+                                                                </th>
+                                                                <th scope="col" class="px-4 py-3">
+                                                                    Country
+                                                                </th>
+                                                                <th scope="col" class="px-4 py-3">
+                                                                    State
+                                                                </th>
+                                                                <th scope="col" class="px-4 py-3">
+                                                                    City
+                                                                </th>
+                                                                <th scope="col" class="px-4 py-3">
+                                                                    Zip Code
+                                                                </th>
+                                                                <th scope="col" class="px-4 py-3 text-center">
+                                                                    Action
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {Array.isArray(customersAddress) && customersAddress.map((customersAddress) => (
+                                                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                                    <td class="px-4 py-4">
+                                                                        {customersAddress.name}
+                                                                    </td>
+                                                                    <td class="px-4 py-4">
+                                                                        {customersAddress.email}
+                                                                    </td>
+                                                                    <td class="px-4 py-4">
+                                                                        {customersAddress.phoneNumber}
+                                                                    </td>
+                                                                    <td class="px-4 py-4">
+                                                                        {customersAddress.streetAddress}
+                                                                    </td>
+                                                                    <td class="px-4 py-4">
+                                                                        {customersAddress.country}
+                                                                    </td>
+                                                                    <td class="px-4 py-4">
+                                                                        {customersAddress.state}
+                                                                    </td>
+                                                                    <td class="px-4 py-4">
+                                                                        {customersAddress.city}
+                                                                    </td>
+                                                                    <td class="px-4 py-4">
+                                                                        {customersAddress.zipCode}
+                                                                    </td>
+                                                                    <td class="px-6 py-4 flex gap-2 justify-center">
+                                                                        <Link to={`/admin/customers/viewcustomers/editsaddress/${customersAddress._id}`}><FaRegEdit className='text-green-400 pointer' size={20} /></Link>
 
-        </tbody>
-    </table>
-</div>
+                                                                        <Link onClick={() => deleteCustomerAddress(customersAddress._id)}><MdOutlineDeleteOutline className='text-red-400 pointer' size={20} /></Link>
+                                                                    </td>
+                                                                </tr>
+                                                            ))}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
 
 
-</div>
-{/* -----------Table End--------------------------- */}
+                                            </div>
+                                            {/* -----------Table End--------------------------- */}
 
 
 
