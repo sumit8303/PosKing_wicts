@@ -34,8 +34,17 @@ db().then(async () => {
 
     const addressCategoryRoute = require('./routes/employeeAddressCategoryRoute.js')
 
-
     const administratorAddressRoute = require('./routes/administratorAddressRoute.js')
+
+    const customerRoute = require('./routes/Customer.js')
+
+    const customerAddressRoute = require('./routes/customerAddress.js')
+
+    const settingCountryRoute = require('./routes/SettingCountryRoute.js')
+
+    const settingStateRoute = require('./routes/SettingStateRoute.js')
+
+    const settingCityRoute = require('./routes/SettingCityRoute.js')
 
     app.use('/api', productRoute)
 
@@ -55,5 +64,16 @@ db().then(async () => {
     app.use('/api', addressCategoryRoute)
 
     app.use('/api', administratorAddressRoute)
+
+    app.use('/api', customerRoute)
+
+    
+    app.use('/api', customerAddressRoute)
+
+    app.use('/api', settingCountryRoute)
+
+    app.use('/api', settingStateRoute)
+
+    app.use('/api', settingCityRoute)
 })
 .catch(err => console.log(err))
