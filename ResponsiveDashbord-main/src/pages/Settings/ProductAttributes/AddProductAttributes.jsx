@@ -1,12 +1,29 @@
+
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaCircleCheck } from "react-icons/fa6";
+import axios from 'axios';
 
 
 
 const AddProductAttributes = () => {
 
+    const navigation = useNavigate()
+    const [data, setData] = useState({
+        name: "",
+    })
 
+    const {name} = data
+
+    function handleChange(e){
+        setData({...data, [e.target.name]: e.target.value})
+    }
+
+    async function handleSubmit(e) {
+        e.preventDefault()
+        await axios.post('http://localhost:4000/api/ceateProductAttributes')
+        navigation('/admin/settings')
+    }
 
 
 
@@ -51,7 +68,7 @@ const AddProductAttributes = () => {
 
 
                             {/* -----------From-------------------- */}
-                            <form action="" method="post">
+                            <form action="" method="post" onSubmit={handleSubmit}>
                                 <div className="flex  justify-between  my-1 p-1  ">
 
                                     <div className="w-full">
@@ -71,6 +88,9 @@ const AddProductAttributes = () => {
                                                         <input
                                                             className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                             type="text"
+                                                            name='name'
+                                                            value={name}
+                                                            onChange={handleChange}
                                                         ></input>
                                                     </div>
                                                 </div>
@@ -87,7 +107,7 @@ const AddProductAttributes = () => {
 
                                                 <div className="px-3 flex justify-around  gap-2 items-center py-1.5  font-larze text-white bg-success  focus:ring-4 focus:outline-none  rounded-md ">
                                                     <FaCircleCheck className=' ' />
-                                                    <button type="button" >
+                                                    <button type="submit">
                                                         Save
                                                     </button>
                                                 </div>

@@ -3,9 +3,6 @@ let bcryptjs = require('bcryptjs')
 
 // ---------------------Add-Employee------------------
 
-
-
-
 exports.newadministrator = async (req, res) => {
     let { name, password, confirmPassword, email, phoneNumber, status, image } = req.body;
 
@@ -37,7 +34,7 @@ exports.newadministrator = async (req, res) => {
             password: hashPassword, // Store the hashed password
             status: status,
             phoneNumber: phoneNumber,
-            image:req.file.filename
+            image: req.file.filename
         });
 
         return res.status(201).json({ success: true, msg: "User created successfully", details: newUser });
@@ -51,10 +48,21 @@ exports.newadministrator = async (req, res) => {
 
 // --------------------Get-All-Employees----------------------
 
-exports.getAllAdministrator  = async (req, res) => {
+exports.getAllAdministrator = async (req, res) => {
     let data = await administratorModel.find({})
     res.json(data)
 }
+
+// exports.getAllAdministrator=async(req,res)=>{
+//     // let _id=req.params._id;
+//     try {
+//     let getAllAdministrator = await administratorModel.find()
+//         return res.status(200).json({success:true,message:"get all exployees",getAllAdministrator})
+//     } catch (error) {
+//         return res.status(200).json({success:false,error:error.message})
+
+//     }
+//     }
 
 
 exports.deleteAdministrator=async(req,res)=>{
@@ -70,17 +78,17 @@ exports.deleteAdministrator=async(req,res)=>{
 }
 
 
+
 // ------------------Update-Administrator--------------------------
-
 // exports.updateAdministrator=async(req,res)=>{
-//     let id=req.params.id;
-//     let {name,email,password,confirmPassword,phoneNumber,status}=req.body;
+//     let _id=req.params._id;
+//     let {name,email,password,confirmPassword,phoneNumber,status,image}=req.body;
 //     try {
-//         let findCustomer=await administratorModel.findByIdAndUpdate({_id:id})
+//         let findCustomer=await administratorModel.findByIdAndUpdate({_id:_id})
 //         if(findCustomer){
-//     let updateCustomer= await administratorModel.updateOne({_id:id}, { $set:{email: email,password:password,confirmPassword:confirmPassword,phoneNumber:phoneNumber,name:name,status:status}})
+//     let updateCustomer= await administratorModel.updateOne({_id:_id}, { $set:{email: email,password:password,confirmPassword:confirmPassword,phoneNumber:phoneNumber,name:name,status:status,image:req.file.filename}})
 
-//             return res.status(400).json({success:true,message:"Employees updated successfully",updateCustomer})
+//             return res.send.json({success:true,message:"Employees updated successfully",updateCustomer})
 //         }
 //     } catch (error) {
 //         return res.status(400).json({success:"false",error:error.message})
@@ -125,9 +133,11 @@ exports.updateAdministrator = async (req, res) => {
 
 
 
+
+
 // ------------------------------------------------Administrators-View-------------------------------
 
-exports.viewAdministrator =  async (req, res) => {
+exports.viewAdministrator = async (req, res) => {
     let id = req.params.id
     let data = await administratorModel.find({ _id: id })
     res.json(data)

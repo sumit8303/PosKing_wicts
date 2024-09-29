@@ -30,6 +30,20 @@ exports.employAllAddress  = async (req, res) => {
 }
 
 
+// exports.employAllAddress=async(req,res)=>{
+    
+//     try {
+//         let findall=await addressemployee.find()
+//         return res.status(200).json({success:true,message:"get all address",findall})
+//     } catch (error) {
+//         return res.status(400).json({success:false,error:error.message})
+        
+//     }
+// }
+
+
+
+
 
 exports.deleteAddress=async(req,res)=>{
     let _id=req.params._id;
@@ -80,5 +94,5 @@ exports.updateEmployeeAddress = async (req, res) => {
         }
     } catch (error) {
         return res.status(400).json({ success: false, error: error.message });
-    }
+      }
 };

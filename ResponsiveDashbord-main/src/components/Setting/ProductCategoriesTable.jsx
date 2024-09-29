@@ -1,16 +1,31 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { CiCirclePlus } from "react-icons/ci";
 import { FaRegEdit } from "react-icons/fa";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { GrFormView } from "react-icons/gr";
+import axios from 'axios';
 
 const ProductCategoriesTable = () => {
 
-    const data = [
-        { id: 1, name: "Name", parentCategory: "A", status: "Active" },
-    ];
+   const [data, setData] = useState('')
+   useEffect(()=>{
+    getSettingProduct()
+   }, [])
+   async function getSettingProduct(){
+    const result = await axios.get('http://localhost:4000/api/getAllSettingCategory')
+    setData(result.data)
+    console.log(result.data)
+   }
 
+   async function deleteSettingProduct(_id) {
+    const result = confirm('Are you sure to delete')
+    if(result === true){
+        await axios.delete(`http://localhost:4000/api/deleteCategory/${_id}`)
+        getSettingProduct()
+    }
+    
+   }
 
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 5;
@@ -45,12 +60,7 @@ const ProductCategoriesTable = () => {
                                 </button>
                             </Link>
                             
-                            <Link to="/admin/settings/parentCategory" className="px-3  flex justify-around md:w-fit  w-full gap-2 ms-auto items-center py-1.5  font-larze text-white bg-success  focus:ring-4 focus:outline-none  rounded-md ">
-                                <CiCirclePlus className='size-5 ' />
-                                <button type="submit" >
-                                    Add Parent Category
-                                </button>
-                            </Link>
+                        
 
 
                         </div>
@@ -86,15 +96,15 @@ const ProductCategoriesTable = () => {
                                 </thead>
                                 <tbody>
 
-                                    {currentData.map((row) => (
+                                    {Array.isArray(data) && currentData.map((row) => (
                                         <tr key={row.id} className=" border-b dark:bg-gray-800 dark:border-gray-700">
                                             <td className="py-2 px-4 border-b">{row.name}</td>
                                             <td className="py-2 px-4 border-b">{row.parentCategory}</td>
                                             <td className="py-2 px-4 border-b">{row.status}</td>
                                             <td class="px-6 py-4 flex gap-2 justify-center">
-                                                <Link to="/admin/settings/viewProductCategories" className='text-lightsuccess pointer'><GrFormView size={20} /></Link>
-                                                <Link to="/admin/settings/editProductCategories"><FaRegEdit className='text-green-400 pointer' size={20} /></Link>
-                                                <span><MdOutlineDeleteOutline className='text-red-400 pointer' size={20} /></span>
+                                                <Link to={`/admin/settings/viewProductCategories/${row._id}`} className='text-lightsuccess pointer'><GrFormView size={20} /></Link>
+                                                <Link to={`/admin/settings/editProductCategories/${row._id}`}><FaRegEdit className='text-green-400 pointer' size={20} /></Link>
+                                                <Link onClick={()=>deleteSettingProduct(row._id)}><MdOutlineDeleteOutline className='text-red-400 pointer' size={20}/></Link> 
                                             </td>
                                         </tr>
                                     ))}

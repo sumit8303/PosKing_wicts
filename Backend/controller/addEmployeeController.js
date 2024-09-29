@@ -49,7 +49,7 @@ exports.getAllEmployees = async (req, res) => {
 
 
 
-exports.deleteEmployees = async (req, res) => {
+exports.deleteEmployees = async(req,res)=>{
     let _id = req.params._id;
     try {
         let findEmployees = await employeesmodel.findByIdAndDelete({ _id: _id })

@@ -17,8 +17,38 @@ exports.AdministratorAddressDetails = async(req, res)=>{
         res.send('save category')
     })
     .catch(err=>console.log(err))
-        
+
     }
+
+
+// exports.AdministratorAddressDetails = async (req, res) => {
+//     let { name, email, phoneNumber, city, country, state, zipCode, street } = req.body;
+//     try {
+//         let _id = req.params._id;
+
+//         let findemploy = await AddressAdministrator.findOne({ _id: _id })
+//         if (findemploy) {
+
+//         }
+//         let addaddress = await AddressAdministrator.create({
+//             name: name,
+//             email: email,
+//             city: city,
+//             phoneNumber: phoneNumber,
+//             zipCode: zipCode,
+//             street: street,
+//             state: state,
+//             country: country
+//         })
+
+
+
+//         return res.status(200).json({ success: true, message: "add address successfully", addaddress })
+//     } catch (error) {
+//         return res.status(200).json({ success: false, error: error.message })
+
+//     }
+// }
 
 
 
@@ -31,12 +61,12 @@ exports.AdministratorAddressDetails = async(req, res)=>{
 //         return res.status(200).json({success:true,message:"get all address",findall})
 //     } catch (error) {
 //         return res.status(400).json({success:false,error:error.message})
-        
+
 //     }
 // }
 
 
-exports.AdminstratorAllAddress  = async (req, res) => {
+exports.AdminstratorAllAddress = async (req, res) => {
     let data = await AddressAdministrator.find({})
     res.json(data)
 }
@@ -45,15 +75,15 @@ exports.AdminstratorAllAddress  = async (req, res) => {
 
 
 
-exports.deleteAdministratorAddress=async(req,res)=>{
-    let _id=req.params._id;
+exports.deleteAdministratorAddress = async (req, res) => {
+    let _id = req.params._id;
     try {
-        let findEmployees=await AddressAdministrator.findByIdAndDelete({_id:_id})
-        if(findEmployees){
-            return res.status(200).json({success:true,message:"Employees deleted successfully",findEmployees})
+        let findEmployees = await AddressAdministrator.findByIdAndDelete({ _id: _id })
+        if (findEmployees) {
+            return res.status(200).json({ success: true, message: "Employees deleted successfully", findEmployees })
         }
     } catch (error) {
-        return res.status(400).json({success:"false",error:error.message})
+        return res.status(400).json({ success: "false", error: error.message })
     }
 }
 
@@ -61,7 +91,7 @@ exports.deleteAdministratorAddress=async(req,res)=>{
 
 // ------------------------------------------------Administrators-View-------------------------------
 
-exports.viewAdministratorAddress =  async (req, res) => {
+exports.viewAdministratorAddress = async (req, res) => {
     let id = req.params.id
     let data = await AddressAdministrator.find({ _id: id })
     res.json(data)
@@ -95,7 +125,7 @@ exports.viewAdministratorAddress =  async (req, res) => {
 
 exports.updateAdministratorAddress = async (req, res) => {
     let _id = req.params._id;
-    let {name,email,phoneNumber,city,country,state,zipCode,streetAddress}=req.body;
+    let { name, email, phoneNumber, city, country, state, zipCode, streetAddress } = req.body;
 
 
     try {
@@ -118,6 +148,6 @@ exports.updateAdministratorAddress = async (req, res) => {
             return res.status(404).json({ success: false, message: "Administrator not found" });
         }
     } catch (error) {
-        return res.status(400).json({ success: false, error: error.message });
-    }
+        return res.status(400).json({ success: false, error: error.message });
+    }
 };

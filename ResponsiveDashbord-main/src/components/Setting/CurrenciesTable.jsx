@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaCircleCheck } from "react-icons/fa6";
 import { IoIosPerson } from "react-icons/io";
 import { GrSecure } from "react-icons/gr";
@@ -13,16 +13,30 @@ import { MdOutlineDeleteOutline } from "react-icons/md";
 import { MdFilterListAlt } from "react-icons/md";
 import { FaAngleDown } from "react-icons/fa";
 import CountriesTable from './CountriesTable'
+import axios from 'axios';
 
 const CurrenciesTable = () => {
 
-    const data = [
-        { id: 1, name: "Name", symbol: "A", code: "AF", IsCryptocurrency: "B", ExchangeRate: "C" },
-    ];
+    const [data, setData] = useState([])
+    useEffect(() => {
+        getCurrency();
+      }, [])
+      async function getCurrency() {
+        let result = await axios.get("http://localhost:4000/api/getcurrency");
+        console.log(result.data)
+        setData(result.data);
+      }
 
+      async function  deleteCurrency(_id) {
+        const result = confirm("Are you sure to delete")
+        if(result === true){
+            await axios.delete(`http://localhost:4000/api/deletecurrency/${_id}`)
+            getCurrency()
+        }
+      }
 
     const [currentPage, setCurrentPage] = useState(1);
-    const rowsPerPage = 5;
+    const rowsPerPage = 1;
 
     // Calculate the start and end index of the current page
     const startIndex = (currentPage - 1) * rowsPerPage;
@@ -99,11 +113,11 @@ const CurrenciesTable = () => {
                                             <td className="py-2 px-4 border-b">{row.name}</td>
                                             <td className="py-2 px-4 border-b">{row.symbol}</td>
                                             <td className="py-2 px-4 border-b">{row.code}</td>
-                                            <td className="py-2 px-4 border-b">{row.IsCryptocurrency}</td>
-                                            <td className="py-2 px-4 border-b">{row.ExchangeRate}</td>
+                                            <td className="py-2 px-4 border-b">{row.isCryptocurrency}</td>
+                                            <td className="py-2 px-4 border-b">{row.exchangeRate}</td>
                                             <td class="px-6 py-4 flex gap-2 justify-center">
-                                                <Link to="/admin/settings/editCurrencies"><FaRegEdit className='text-green-400 pointer' size={20} /></Link>
-                                                <span><MdOutlineDeleteOutline className='text-red-400 pointer' size={20} /></span>
+                                                <Link to={`/admin/settings/editCurrencies/${row._id}`}><FaRegEdit className='text-green-400 pointer' size={20} /></Link>
+                                                <Link onClick={()=>deleteCurrency(row._id)}><MdOutlineDeleteOutline className='text-red-400 pointer' size={20}/></Link> 
                                             </td>
                                         </tr>
                                     ))}

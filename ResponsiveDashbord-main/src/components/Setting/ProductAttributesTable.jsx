@@ -1,17 +1,32 @@
-import React, { useState } from 'react'
+
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { CiCirclePlus } from "react-icons/ci";
 import { FaRegEdit } from "react-icons/fa";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { GrFormView } from "react-icons/gr";
+import axios from 'axios';
 
 const ProductAttributesTable = () => {
 
-    const data = [
-        { id: 1, name: "Name" },
-    ];
+   const [data, setData] = useState([])
+   useEffect(()=>{
+    getProductAttribute()
+   }, [])
+
+   async function getProductAttribute() {
+    const result = await axios.get('http://localhost:4000/api/gretallProductAttributes')
+    setData(result.data)
+   }
 
 
+   async function  deleteProductAttribute(_id) {
+    const result = confirm("Are you sure to delete")
+    if(result === true){
+        await axios.delete(`http://localhost:4000/api/deleteProductAttributesColor/${_id}`)
+        getProductAttribute()
+    }
+  }
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 5;
 
@@ -81,7 +96,7 @@ const ProductAttributesTable = () => {
                                             <td class="px-6 py-4 flex gap-2 justify-center">
                                                 <Link to="/admin/settings/viewProductAttributes" className='text-lightsuccess pointer'><GrFormView size={20} /></Link>
                                                 <Link to="/admin/settings/editProductAttributes"><FaRegEdit className='text-green-400 pointer' size={20} /></Link>
-                                                <span><MdOutlineDeleteOutline className='text-red-400 pointer' size={20} /></span>
+                                                <Link onClick={()=>deleteProductAttribute(row._id)}><MdOutlineDeleteOutline className='text-red-400 pointer' size={20}/></Link> 
                                             </td>
                                         </tr>
                                     ))}

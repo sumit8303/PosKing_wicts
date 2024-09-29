@@ -19,7 +19,7 @@ const ViewProductAttributes = () => {
 
 
     const data = [
-        { id: 1, name: "XXL"},
+        { id: 1, name: "XXL" },
     ];
 
 
@@ -75,17 +75,17 @@ const ViewProductAttributes = () => {
                                         <Link to="/admin/settings/addProductAttributeOptions" className="px-3  flex justify-around md:w-fit  w-full gap-2 ms-auto items-center py-1.5  font-larze text-white bg-success  focus:ring-4 focus:outline-none  rounded-md ">
                                             <CiCirclePlus className='size-5 ' />
                                             <button type="submit" >
-                                           Add Product Attribute Options
+                                                Add Product Attribute Options
                                             </button>
                                         </Link>
 
                                         <div className="md:flex md:space-y-0 space-y-2 mx-auto md:mx-0  gap-4 ">
 
-<Link to="/admin/settings/" className="px-3 flex justify-around bg-gray text-white rounded-full gap-2 items-center md:py-1.5 py-1 font-larze hover:bg-black focus:ring-4 focus:outline-none  rounded-md ">
-    <span className='text-white'>X</span>
-</Link>
+                                            <Link to="/admin/settings/" className="px-3 flex justify-around bg-gray text-white rounded-full gap-2 items-center md:py-1.5 py-1 font-larze hover:bg-black focus:ring-4 focus:outline-none  rounded-md ">
+                                                <span className='text-white'>X</span>
+                                            </Link>
 
-</div>
+                                        </div>
 
                                     </div>
 
@@ -113,7 +113,6 @@ const ViewProductAttributes = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-
                                                 {currentData.map((row) => (
                                                     <tr key={row.id} className=" border-b dark:bg-gray-800 dark:border-gray-700">
                                                         <td className="py-2 px-4 border-b">{row.name}</td>

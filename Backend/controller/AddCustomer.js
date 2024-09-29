@@ -54,7 +54,16 @@ exports.getAllCustomer  = async (req, res) => {
     res.json(data)
 }
 
-
+// exports.getAllCustomer=async(req,res)=>{
+//     // let _id=req.params._id;
+//     try {
+//     let getallCustomer=await  customerModel.find()
+//         return res.status(200).json({success:true,message:"get all exployees",getallCustomer})
+//     } catch (error) {
+//         return res.status(200).json({success:false,error:error.message})
+        
+//     }
+    // }
 
 // ------------------Delete-Customer--------------------------
 
@@ -174,5 +183,3 @@ exports.viewCustomer =  async (req, res) => {
     let data = await customerModel.find({ _id: id })
     res.json(data)
 }
-
-

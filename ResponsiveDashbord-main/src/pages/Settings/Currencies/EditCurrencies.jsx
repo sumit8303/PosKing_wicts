@@ -1,11 +1,40 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FaCircleCheck } from "react-icons/fa6";
+import axios from 'axios';
 
 
 
 const EditCurrencies = () => {
 
+    const navigation = useNavigate()
+    const [currency, setCurrency] = useState({
+        name :"",
+        symbol :"",
+        code :"",
+        isCryptocurrency :"",
+        exchangeRate :"",
+       })
+   
+       const {name, symbol, code, isCryptocurrency, exchangeRate} = currency
+   
+       function handleChange(e){
+           setCurrency({...currency, [e.target.name]: e.target.value})
+       }
+       let {id} = useParams()
+       useEffect(()=>{
+           viewCurrency()
+       },[])
+       async function viewCurrency() {
+           let result = await axios.get(`http://localhost:4000/api/viewCurrency/${id}`)
+           setCurrency(result.data[0]) 
+       }
+   
+       async function handleSubmit(e){
+           e.preventDefault()
+           await axios.put(`http://localhost:4000/api/updateCurrency/${id}`, currency) 
+           navigation('/admin/settings')
+          }
 
 
 
@@ -50,7 +79,7 @@ const EditCurrencies = () => {
 
 
                             {/* -----------From-------------------- */}
-                            <form action="" method="post">
+                            <form action="" method="post" onSubmit={handleSubmit}>
                                 <div className="flex  justify-between  my-1 p-1  ">
 
                                     <div className="w-full">
@@ -70,6 +99,9 @@ const EditCurrencies = () => {
                                                         <input
                                                             className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                             type="text"
+                                                            name='name'
+                                                            value={name}
+                                                            onChange={handleChange}
                                                         ></input>
                                                     </div>
                                                 </div>
@@ -84,6 +116,9 @@ const EditCurrencies = () => {
                                                         <input
                                                             className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                             type="text"
+                                                            name='symbol'
+                                                            value={symbol}
+                                                            onChange={handleChange}
                                                         ></input>
                                                     </div>
                                                 </div>
@@ -97,6 +132,9 @@ const EditCurrencies = () => {
                                                         <input
                                                             className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                             type="text"
+                                                            name='code'
+                                                            value={code}
+                                                            onChange={handleChange}
                                                         ></input>
                                                     </div>
                                                 </div>
@@ -113,11 +151,11 @@ const EditCurrencies = () => {
                                                     </label>
                                                     <div className="mt-2 flex  justify-between items-center ">
                                                         <div class="flex w-full items-center  mb-4">
-                                                            <input id="Yes" type="radio" value="Yes" name="Status" className='accent-success h-4 w-4 ' />
+                                                            <input id="Yes" type="radio" value="Yes" name="isCryptocurrency" onChange={handleChange} checked={isCryptocurrency === "Yes"} className='accent-success h-4 w-4 ' />
                                                             <label for="Yes" class="ms-2 text-base font-medium text-gray">Yes</label>
                                                         </div>
                                                         <div class="flex w-full items-center mb-4 ">
-                                                            <input id="No" type="radio" value="No" name="Status" className='accent-success h-4 w-4 ' />
+                                                            <input id="No" type="radio" value="No" name="isCryptocurrency" onChange={handleChange} checked= {isCryptocurrency === "No"}  className='accent-success h-4 w-4 ' />
                                                             <label for="No" class="ms-2 text-base font-medium text-gray">No</label>
                                                         </div>
                                                     </div>
@@ -134,6 +172,9 @@ const EditCurrencies = () => {
                                                         <input
                                                             className="flex h-10 w-full rounded-md border border-gray bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-success focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                                             type="text"
+                                                            name='exchangeRate'
+                                                            value={exchangeRate}
+                                                            onChange={handleChange}
                                                         ></input>
                                                     </div>
                                                 </div>
@@ -151,7 +192,7 @@ const EditCurrencies = () => {
 
                                                 <div className="px-3 flex justify-around  gap-2 items-center py-1.5  font-larze text-white bg-success  focus:ring-4 focus:outline-none  rounded-md ">
                                                     <FaCircleCheck className=' ' />
-                                                    <button type="button" >
+                                                    <button type="submit" >
                                                         Save
                                                     </button>
                                                 </div>

@@ -44,7 +44,6 @@ exports.saveProduct = async (req, res) => {
 
 
 
-
 ///////    view product ///////////
 exports.viewProduct =  async (req, res) => {
     let id = req.params.id

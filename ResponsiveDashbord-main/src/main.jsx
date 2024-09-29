@@ -173,7 +173,7 @@ const router = createBrowserRouter(
         <Route path='/admin/administrators' element={<Administrators/>} />
         <Route path='/admin/administrators/addadministrators' element={<AddAdministrators/>} />
         <Route path='/admin/administrators/editadministrators/:id' element={<EditAdministrators/>} />
-        <Route path='/admin/administrators/viewadministrators/:id' element={<ViewAdministrators/>} />
+        <Route path='/admin/administrators/vi/admin/settings/addProductAttributesewadministrators/:id' element={<ViewAdministrators/>} />
         <Route path='/admin/administrators/viewadministrators/addAddress' element={<Address/>} />
         <Route path='/admin/administrators/viewadministrators/editAddress' element={<EditAddress/>} />
         <Route path='/admin/administrators/viewadministrators/addCategory' element={<AddressCategory/>} />
@@ -208,9 +208,9 @@ const router = createBrowserRouter(
         <Route path='/admin/settings/parentCategory' element={<ParentCategory/>} />
         <Route path='/admin/settings/addProductAttributes' element={<AddProductAttributes/>} />
         <Route path='/admin/settings/viewProductAttributes' element={<ViewProductAttributes/>} />
-        <Route path='/admin/settings/editProductAttributes' element={<EditProductAttributes/>} />
+        <Route path='/admin/settings/editProductAttributes/:id' element={<EditProductAttributes/>} />
         <Route path='/admin/settings/addProductAttributeOptions' element={<AddProductAttributeOptions/>} />
-        <Route path='/admin/settings/editProductAttributeOptions' element={<EditProductAttributeOptions/>} />
+        <Route path='/admin/settings/editProductAttributeOptions/:id' element={<EditProductAttributeOptions/>} />
         <Route path='/admin/settings/addProductBrands' element={<AddProductBrands/>} />
         <Route path='/admin/settings/viewProductBrands' element={<ViewProductBrands/>} />
         <Route path='/admin/settings/editProductBrands' element={<EditProductBrands/>} />
@@ -291,12 +291,12 @@ const router = createBrowserRouter(
         <Route path='/admin/settings/addStates' element={<AddStates/>} />
         <Route path='/admin/settings/editStates/:id' element={<EditStates/>} />
         <Route path='/admin/settings/addCities' element={<AddCities/>} />
-        <Route path='/admin/settings/editCities' element={<EditCities/>} />
+        <Route path='/admin/settings/editCities/:id' element={<EditCities/>} />
         <Route path='/admin/settings/addCurrencies' element={<AddCurrencies/>} />
-        <Route path='/admin/settings/editCurrencies' element={<EditCurrencies/>} />
+        <Route path='/admin/settings/editCurrencies/:id' element={<EditCurrencies/>} />
         <Route path='/admin/settings/addProductCategories' element={<AddProductCategories/>} />
-        <Route path='/admin/settings/editProductCategories' element={<EditProductCategories/>} />
-        <Route path='/admin/settings/viewProductCategories' element={<ViewProductCategories/>} />
+        <Route path='/admin/settings/editProductCategories/:id' element={<EditProductCategories/>} />
+        <Route path='/admin/settings/viewProductCategories/:id' element={<ViewProductCategories/>} />
         <Route path='/admin/settings/parentCategory' element={<ParentCategory/>} />
         <Route path='/admin/settings/addProductAttributes' element={<AddProductAttributes/>} />
         <Route path='/admin/settings/viewProductAttributes' element={<ViewProductAttributes/>} />

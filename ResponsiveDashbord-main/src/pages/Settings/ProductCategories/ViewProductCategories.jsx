@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BsCardText } from "react-icons/bs";
 import { FaRegEdit } from "react-icons/fa";
 import { GrFormView } from "react-icons/gr";
@@ -10,14 +10,39 @@ import { IoIosPerson } from "react-icons/io";
 import { GrSecure } from "react-icons/gr";
 import { IoLocationSharp } from "react-icons/io5";
 import { IoBag } from "react-icons/io5";
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { CiCirclePlus } from "react-icons/ci";
 import { TiImage } from "react-icons/ti";
 import { GrPowerReset } from "react-icons/gr";
+import axios from 'axios';
 
 
 
 const ViewProductCategories = () => {
+
+    // const id = useParams()
+    // const [data, setData] = useState([])
+    // useEffect(() => {
+    //     viewSettingProduct()
+    // }, [])
+    // async function viewSettingProduct() {
+    //     const result = await axios.get(`http://localhost:4000/api/viewSettingProduct/${id}`)
+    //     setData(result.data)
+    // }
+
+    let { id } = useParams()
+    let [data, setData] = useState([])
+    useEffect(() => {
+        viewSettingProduct()
+    }, [])
+    async function viewSettingProduct() {
+        let result = await axios.get(`http://localhost:4000/api/viewSettingProduct/${id}`)
+
+        setData(result.data)
+
+    }
+
+
 
     const [selectImage, setSelectImage] = useState()
 
@@ -47,32 +72,35 @@ const ViewProductCategories = () => {
                     {/* ----------Start View---------*/}
 
                     <div className=" ">
+
                         <div className="  shadow-md md:p-2 bg-white rounded-md antialiased ">
                             <div className="w-full py-2 mx-2 md:mx-0 text-xl ">Product Categories<hr className='my-4' /></div>
 
+                            {data.map((data)=>(
                             <div className="md:flex  w-full gap-3 justify-start  items-center ">
 
-                                <div className="">
 
-                                    <div className=" mb-1 md:mb-0 px-2 rounded  text-center  ">
+                                    <div className="">
 
-                                        <img src={pro} alt="" srcset="" className='shadow-sm mx-auto md:mx-0 md:w-80 md:h-80 rounded  object-fit ' />
+                                        <div className=" mb-1 md:mb-0 px-2 rounded  text-center  ">
+
+                                            <img src={`http://localhost:4000/${data.image}`} alt="" srcset="" className='shadow-sm mx-auto md:mx-0 md:w-80 md:h-80 rounded  object-fit ' />
+
+                                        </div>
 
                                     </div>
-
-                                </div>
 
 
 
 
                                 <div className=" w-full md:h-80  ">
                                     <div className="">
-                                    <div className="mb-2 text-center md:text-justify  fount-bold capitalize text-2xl">Men</div>
-                                    <div className="py-2  ">
-                                        <div className="bg-green-100 w-fit text-green-900 text-sm md:text-md mx-auto md:mx-0 text-black capitalize w-15 text-center rounded text-sm p-1">
-                                            Active
+                                        <div className="mb-2 text-center md:text-justify  fount-bold capitalize text-2xl">{data.name}</div>
+                                        <div className="py-2  ">
+                                            <div className="bg-green-100 w-fit text-green-900 text-sm md:text-md mx-auto md:mx-0 text-black capitalize w-15 text-center rounded text-sm p-1">
+                                                {data.status}
+                                            </div>
                                         </div>
-                                    </div>
                                     </div>
                                 </div>
 
@@ -80,6 +108,7 @@ const ViewProductCategories = () => {
 
                             </div>
 
+))}
                         </div>
 
                     </div>
@@ -93,8 +122,9 @@ const ViewProductCategories = () => {
                         <IoMdPrint className=' ' />
                         <button type="submit" >
                             Print
-                        </button>
+                            </button>
                     </div> */}
+
 
 
 

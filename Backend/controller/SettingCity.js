@@ -34,11 +34,11 @@ exports.createCity = async(req, res)=>{
 exports.deleteCity=async(req,res)=>{
     let _id=req.params._id;
     try {
-        let deleteCountryById=await settingCity.findByIdAndDelete({_id:_id})
-     if(deleteCountryById)
+        let deleteCityById=await settingCityModel.findByIdAndDelete({_id:_id})
+     if(deleteCityById)
 
     {
-        return res.status(200).json({success:true,message:"Employees deleted successfully",findEmployees})
+        return res.status(200).json({success:true,message:"Employees deleted successfully",deleteCityById})
 
     }else{
 
@@ -53,13 +53,10 @@ exports.deleteCity=async(req,res)=>{
 
 
 
-
 exports.GetAllCity=async(req,res)=>{
  const data = await settingCityModel.find({})
  res.json(data)
 }
-
-
 
 
 
@@ -95,14 +92,27 @@ exports.filterCity = async (req, res) => {
 
 
 
+////////   UpdateCity
+
+
+
+exports.updateCity = async (req, res) => {
+    const id = req.params.id
+    const newData = req.body
+
+    await settingCityModel.findByIdAndUpdate(id, newData, { new: true })
+    res.send("city updated")
+}
+
+
+
+/////  ViewCity
 
 
 
 
-
-
-
-
-
-
-
+exports.viewCity =  async (req, res) => {
+    const id = req.params.id
+    const data = await settingCityModel.find({ _id: id })
+    res.json(data)
+}

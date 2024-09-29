@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { FaCircleCheck } from "react-icons/fa6";
 import { IoIosPerson } from "react-icons/io";
@@ -12,22 +12,32 @@ import { FaRegEdit } from "react-icons/fa";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { MdFilterListAlt } from "react-icons/md";
 import { FaAngleDown } from "react-icons/fa";
+import axios from 'axios';
 
 
 
 const CitiesTable = () => {
 
-    const data = [
-        { id: 1, name: "John Doe", state: "UP", status: "Active" },
-        { id: 2, name: "John Doe", state: "UP", status: "Active" },
-        { id: 3, name: "John Doe", state: "UP", status: "Active" },
-        { id: 4, name: "John Doe", state: "UP", status: "Active" },
-        { id: 5, name: "John Doe", state: "UP", status: "Active" },
-        { id: 6, name: "John Doe", state: "UP", status: "Active" },
-    ];
+    const [data, setData] = useState([])
+    useEffect(() => {
+        getCity();
+      }, [])
+      async function getCity() {
+        let result = await axios.get("http://localhost:4000/api/getAllCity");
+        console.log(result.data)
+        setData(result.data);
+      }
+
+      async function deleteCity(_id) {
+        const result = confirm("Are you sure to delete")
+        if(result === true){
+          await axios.delete(`http://localhost:4000/api/deleteCity/${_id}`)
+          getCity()
+        }
+      }
 
     const [currentPage, setCurrentPage] = useState(1);
-    const rowsPerPage = 5;
+    const rowsPerPage = 2;
 
     // Calculate the start and end index of the current page
     const startIndex = (currentPage - 1) * rowsPerPage;
@@ -67,12 +77,12 @@ const CitiesTable = () => {
 
                             {currentData.map((row) => (
                                 <tr key={row.id} className=" border-b dark:bg-gray-800 dark:border-gray-700">
-                                    <td className="py-2 px-4 border-b">{row.name}</td>
-                                    <td className="py-2 px-4 border-b">{row.state}</td>
+                                    <td className="py-2 px-4 border-b">{row.cityName}</td>
+                                    <td className="py-2 px-4 border-b">{row.stateName}</td>
                                     <td className="py-2 px-4 border-b">{row.status}</td>
                                     <td class="px-6 py-4 flex gap-2 justify-center">
-                                        <Link to="/admin/settings/editCities"><FaRegEdit className='text-green-400 pointer' size={20} /></Link>
-                                        <span><MdOutlineDeleteOutline className='text-red-400 pointer' size={20} /></span>
+                                        <Link to={`/admin/settings/editCities/${row._id}`}><FaRegEdit className='text-green-400 pointer' size={20} /></Link>
+                                        <Link onClick={()=>deleteCity(row._id)}><MdOutlineDeleteOutline className='text-red-400 pointer' size={20}/></Link>
                                     </td>
                                 </tr>
                             ))}

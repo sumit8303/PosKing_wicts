@@ -46,6 +46,14 @@ db().then(async () => {
 
     const settingCityRoute = require('./routes/SettingCityRoute.js')
 
+    const settingCurrencyRoute = require('./routes/SettingCurrency.js')
+
+    const settingProductRoute = require('./routes/SettingProductCategory.js')
+    
+    const settingProductAttributeRoute = require('./routes/SettingProductAttributes.js')
+
+    const settingProductAttributeColorRoute = require('./routes/SettingProductAttributesColor.js')
+
     app.use('/api', productRoute)
 
 
@@ -75,5 +83,13 @@ db().then(async () => {
     app.use('/api', settingStateRoute)
 
     app.use('/api', settingCityRoute)
+
+    app.use('/api', settingCurrencyRoute)
+
+    app.use('/api', settingProductRoute)
+    app.use('/api', settingProductAttributeRoute)
+
+    app.use('/api', settingProductAttributeColorRoute)
+
 })
 .catch(err => console.log(err))
