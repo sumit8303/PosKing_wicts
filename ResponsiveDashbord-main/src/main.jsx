@@ -265,7 +265,7 @@ const router = createBrowserRouter(
         <Route path='/admin/administrators' element={<Administrators/>} />
         <Route path='/admin/administrators/addadministrators' element={<AddAdministrators/>} />
         <Route path='/admin/administrators/editadministrators' element={<EditAdministrators/>} />
-        <Route path='/admin/administrators/viewadministrators' element={<ViewAdministrators/>} />
+        <Route path='/admin/administrators/viewadministrators/:id' element={<ViewAdministrators/>} />
         <Route path='/admin/administrators/viewadministrators/addAddress' element={<Address/>} />
         <Route path='/admin/administrators/viewadministrators/editAddress/:id' element={<EditAddress/>} />
         <Route path='/admin/administrators/viewadministrators/addCategory' element={<AddressCategory/>} />

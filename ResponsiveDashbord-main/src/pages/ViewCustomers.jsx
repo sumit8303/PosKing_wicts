@@ -313,12 +313,12 @@ const ViewCustomers = () => {
                                                         </button>
                                                     </Link>
 
-                                                    <Link to="/admin/customers/viewcustomers/addcategory" className="px-3  flex justify-around md:w-fit w-full gap-2 ms-auto items-center py-1.5  font-larze text-white bg-success  focus:ring-4 focus:outline-none  rounded-md ">
+                                                    {/* <Link to="/admin/customers/viewcustomers/addcategory" className="px-3  flex justify-around md:w-fit w-full gap-2 ms-auto items-center py-1.5  font-larze text-white bg-success  focus:ring-4 focus:outline-none  rounded-md ">
                                                         <CiCirclePlus className='size-5 ' />
                                                         <button type="submit" >
                                                             Add Category
                                                         </button>
-                                                    </Link>
+                                                    </Link> */}
 
                                                 </div>
 
